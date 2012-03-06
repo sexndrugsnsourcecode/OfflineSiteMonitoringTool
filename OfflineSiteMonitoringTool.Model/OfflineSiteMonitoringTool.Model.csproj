@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculateLastBusinessDay.cs" />
+    <Compile Include="CheckSitesActivity.cs" />
     <Compile Include="CheckToolShouldBeRun.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
