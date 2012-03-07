@@ -15,11 +15,7 @@ namespace OfflineSiteMonitoringTool.Model
         public UpdateOfflineSiteData(IRepository repository)
         {
             _repository = repository;
-
-
         }
-
-        
 
         public List<string> GetSitesRecordedAsOffline()
         {

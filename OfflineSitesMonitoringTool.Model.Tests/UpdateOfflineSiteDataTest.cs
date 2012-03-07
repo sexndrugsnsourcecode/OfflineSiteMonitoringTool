@@ -27,9 +27,21 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             
         }
 
-        /// <summary>
-        ///A test for RemoveOnlineSites
-        ///</summary>
+        [TestMethod]
+        public void GetSitesRecordedAsOffline_ReturnsSitesRecordedAsOffline()
+        {
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
+
+            repositoryMock.Setup(x => x.GetSitesRecordedAsOffline()).Returns(sitesRecordedAsOffline);
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            List<string> result = new List<string>();
+            result = updateOfflineSiteData.GetSitesRecordedAsOffline();
+
+            Assert.AreEqual(sitesRecordedAsOffline, result);
+        }
+        
         [TestMethod]
         public void RemoveOnlineSites_NoOnlineSites_NothingRemoved()
         {
@@ -50,10 +62,6 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             string onlineSite2 = "onlineSite2";
 
             List<string> offlineSites = AddOfflineSites(3);
-            //List<string> sitesRecordedAsOffline = new List<string>()
-            //{
-            //    "offlineSite1", "offlineSite2", "offlineSite3", onlineSite1, onlineSite2
-            //};
             List<string> sitesRecordedAsOffline = AddOfflineSites(3);
             sitesRecordedAsOffline.AddRange(AddOnlineSites(2));
 
