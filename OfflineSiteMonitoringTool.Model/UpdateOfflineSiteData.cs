@@ -9,34 +9,35 @@ namespace OfflineSiteMonitoringTool.Model
     {
         private IRepository _repository;
 
-        private List<string> _offlineSites;
+        // private List<string> _offlineSites;
         private List<string> _sitesRecordedAsOffline;
         
-        public UpdateOfflineSiteData(IRepository repository, IList<string> offlineSites)
+        public UpdateOfflineSiteData(IRepository repository)
         {
             _repository = repository;
-
-            _sitesRecordedAsOffline = getSitesRecordedAsOffline();
 
 
         }
 
         
 
-        private List<string> getSitesRecordedAsOffline()
+        public List<string> GetSitesRecordedAsOffline()
         {
             List<string> sitesRecordedAsOffline = new List<string>();
 
-            //sitesRecordedAsOffline = _repository.GetSitesRecordedAsOffline();
+            sitesRecordedAsOffline = _repository.GetSitesRecordedAsOffline();
 
             return sitesRecordedAsOffline;
         }
 
+        // remove sites that have come online from offline site table
         public void RemoveOnlineSites(List<string> sitesRecordedAsOffline, List<string> offlineSites)
         {
-            // remove sites that have come online from offline site table
-
             // for all sites present in sitesRecordedAsOffline but not in offlineSites, remove those sites from table
+            IEnumerable<string> onlineSites = sitesRecordedAsOffline.Except(offlineSites);
+
+            foreach (string onlineSite in onlineSites)
+                _repository.RemoveOnlineSite(onlineSite);
         }
 
         public void UpdateSitesAlreadyRecordedAsOffline(List<string> sitesRecordedAsOffline, List<string> offlineSites)

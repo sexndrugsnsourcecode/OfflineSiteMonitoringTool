@@ -11,5 +11,7 @@ namespace OfflineSiteMonitoringTool.Model
         Boolean HasDataBeenUpdatedSinceLastBusinessDay(DateTime lastBusinessDay);
         List<string> GetSitesToCheckMessagingActivityFor();
         List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay);
+        List<string> GetSitesRecordedAsOffline();
+        void RemoveOnlineSite(string onlineSite);
     }
 }
