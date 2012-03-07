@@ -13,5 +13,6 @@ namespace OfflineSiteMonitoringTool.Model
         List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay);
         List<string> GetSitesRecordedAsOffline();
         void RemoveOnlineSite(string onlineSite);
+        void UpdateSiteAlreadyRecordedAsOffline(string offlineSite);
     }
 }

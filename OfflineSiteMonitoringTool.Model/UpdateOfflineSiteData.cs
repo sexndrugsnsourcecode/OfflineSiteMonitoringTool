@@ -9,9 +9,6 @@ namespace OfflineSiteMonitoringTool.Model
     {
         private IRepository _repository;
 
-        // private List<string> _offlineSites;
-        private List<string> _sitesRecordedAsOffline;
-        
         public UpdateOfflineSiteData(IRepository repository)
         {
             _repository = repository;
@@ -38,11 +35,16 @@ namespace OfflineSiteMonitoringTool.Model
             }
         }
 
+        // update any offline sites that are already recorded
         public void UpdateSitesAlreadyRecordedAsOffline(List<string> sitesRecordedAsOffline, List<string> offlineSites)
         {
-            // update any offline sites that are already recorded
-
             // for all sites in sitesRecordedAsOffline and offlineSites, update the site's row in table
+
+            foreach (string offlineSite in sitesRecordedAsOffline)
+            {
+                if (offlineSites.Contains(offlineSite))
+                    _repository.UpdateSiteAlreadyRecordedAsOffline(offlineSite);
+            }
         }
         
         public void RecordNewOfflineSites(List<string> sitesRecordedAsOffline, List<string> offlineSites)

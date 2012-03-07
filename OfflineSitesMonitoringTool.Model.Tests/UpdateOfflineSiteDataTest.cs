@@ -18,15 +18,7 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             repositoryMock = new Mock<IRepository>(MockBehavior.Strict);
             repository = repositoryMock.Object;
         }
-        /// <summary>
-        ///A test for RecordNewOfflineSites
-        ///</summary>
-        [TestMethod]
-        public void RecordNewOfflineSitesTest()
-        {
-            
-        }
-
+        
         [TestMethod]
         public void GetSitesRecordedAsOffline_ReturnsSitesRecordedAsOffline()
         {
@@ -73,8 +65,45 @@ namespace OfflineSitesMonitoringTool.Model.Tests
 
             updateOfflineSiteData.RemoveOnlineSites(sitesRecordedAsOffline, offlineSites);
 
-            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite1), Times.Exactly(1));
-            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite2), Times.Exactly(1));
+            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite1), Times.Once());
+            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite2), Times.Once());
+        }
+
+        [TestMethod]
+        public void UpdateSitesAlreadyRecordedAsOffline_NoSitesRecordedAsOffline_NoSitesUpdated()
+        {
+            List<string> offlineSites = AddOfflineSites(3);
+            List<string> sitesRecordedAsOffline = new List<string>();
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            updateOfflineSiteData.UpdateSitesAlreadyRecordedAsOffline(sitesRecordedAsOffline, offlineSites);
+
+            repositoryMock.Verify(x => x.UpdateSiteAlreadyRecordedAsOffline(It.IsAny<string>()), Times.Never());
+        }
+
+        [TestMethod]
+        public void UpdateSitesAlreadyRecordedAsOffline_UpdatesOfflineSites()
+        {
+            string offlineSite1 = "offlineSite1";
+            string offlineSite2 = "offlineSite2";
+            string offlineSite3 = "offlineSite3";
+
+            List<string> offlineSites = AddOfflineSites(3);
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
+
+            // Need to declare these setup methods or strictMock will throw exception
+            repositoryMock.Setup(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite1));
+            repositoryMock.Setup(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite2));
+            repositoryMock.Setup(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite3));
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            updateOfflineSiteData.UpdateSitesAlreadyRecordedAsOffline(sitesRecordedAsOffline, offlineSites);
+
+            repositoryMock.Verify(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite1), Times.Once());
+            repositoryMock.Verify(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite2), Times.Once());
+            repositoryMock.Verify(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite3), Times.Once());
         }
 
         private List<string> AddOfflineSites(int numberOfOfflineSites)
@@ -95,21 +124,6 @@ namespace OfflineSitesMonitoringTool.Model.Tests
                 onlineSites.Add("onlineSite" + x);
 
             return onlineSites;
-        }
-
-        /// <summary>
-        ///A test for UpdateSitesAlreadyRecordedAsOffline
-        ///</summary>
-        [TestMethod]
-        public void UpdateSitesAlreadyRecordedAsOfflineTest()
-        {
-            IRepository repository = null; // TODO: Initialize to an appropriate value
-            IList<string> offlineSites = null; // TODO: Initialize to an appropriate value
-            UpdateOfflineSiteData target = new UpdateOfflineSiteData(repository); // TODO: Initialize to an appropriate value
-            List<string> sitesRecordedAsOffline = null; // TODO: Initialize to an appropriate value
-            List<string> offlineSites1 = null; // TODO: Initialize to an appropriate value
-            target.UpdateSitesAlreadyRecordedAsOffline(sitesRecordedAsOffline, offlineSites1);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
     }
 }
