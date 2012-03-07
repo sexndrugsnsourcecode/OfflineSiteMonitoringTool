@@ -106,6 +106,40 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             repositoryMock.Verify(x => x.UpdateSiteAlreadyRecordedAsOffline(offlineSite3), Times.Once());
         }
 
+        [TestMethod]
+        public void RecordNewOfflineSites_NoOfflineSites_NothingRecorded()
+        {
+            List<string> offlineSites = new List<string>();
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            updateOfflineSiteData.RecordNewOfflineSites(sitesRecordedAsOffline, offlineSites);
+
+            repositoryMock.Verify(x => x.RemoveOnlineSite(It.IsAny<string>()), Times.Never());
+        }
+
+        [TestMethod]
+        public void RecordNewOfflineSites_RecordsNewOfflineSites()
+        {
+            string offlineSite4 = "offlineSite4";
+            string offlineSite5 = "offlineSite5";
+
+            List<string> offlineSites = AddOfflineSites(5);
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
+
+            // Need to declare these setup methods or strictMock will throw exception
+            repositoryMock.Setup(x => x.RecordNewOfflineSite(offlineSite4));
+            repositoryMock.Setup(x => x.RecordNewOfflineSite(offlineSite5));
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            updateOfflineSiteData.RecordNewOfflineSites(sitesRecordedAsOffline, offlineSites);
+
+            repositoryMock.Verify(x => x.RecordNewOfflineSite(offlineSite4), Times.Once());
+            repositoryMock.Verify(x => x.RecordNewOfflineSite(offlineSite5), Times.Once());
+        }
+
         private List<string> AddOfflineSites(int numberOfOfflineSites)
         {
             List<string> offlineSites = new List<string>();

@@ -27,12 +27,10 @@ namespace OfflineSiteMonitoringTool.Model
         public void RemoveOnlineSites(List<string> sitesRecordedAsOffline, List<string> offlineSites)
         {
             // for all sites present in sitesRecordedAsOffline but not in offlineSites, remove those sites from table
-            List<string> onlineSites = (sitesRecordedAsOffline.Except(offlineSites)).ToList<string>();
+            IEnumerable<string> onlineSites = sitesRecordedAsOffline.Except(offlineSites);
             
             foreach (string onlineSite in onlineSites)
-            {
                 _repository.RemoveOnlineSite(onlineSite);
-            }
         }
 
         // update any offline sites that are already recorded
@@ -46,12 +44,15 @@ namespace OfflineSiteMonitoringTool.Model
                     _repository.UpdateSiteAlreadyRecordedAsOffline(offlineSite);
             }
         }
-        
+
+        // record any offline sites not already recorded
         public void RecordNewOfflineSites(List<string> sitesRecordedAsOffline, List<string> offlineSites)
         {
-            // record any offline sites not already recorded
-
             // for all sites in sitesRecordedAsOffline but not in offlineSites, add details of site to table
+            IEnumerable<string> newOfflineSites = offlineSites.Except(sitesRecordedAsOffline);
+
+            foreach (string newOfflineSite in newOfflineSites)
+                _repository.RecordNewOfflineSite(newOfflineSite);
         }
         
     }

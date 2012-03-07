@@ -14,5 +14,6 @@ namespace OfflineSiteMonitoringTool.Model
         List<string> GetSitesRecordedAsOffline();
         void RemoveOnlineSite(string onlineSite);
         void UpdateSiteAlreadyRecordedAsOffline(string offlineSite);
+        void RecordNewOfflineSite(string offlineSite);
     }
 }
