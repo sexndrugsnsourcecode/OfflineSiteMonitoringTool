@@ -9,6 +9,15 @@ namespace OfflineSitesMonitoringTool.Model.Tests
     [TestClass]
     public class UpdateOfflineSiteDataTest
     {
+        Mock<IRepository> repositoryMock;
+        IRepository repository;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            repositoryMock = new Mock<IRepository>(MockBehavior.Strict);
+            repository = repositoryMock.Object;
+        }
         /// <summary>
         ///A test for RecordNewOfflineSites
         ///</summary>
@@ -24,17 +33,47 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         [TestMethod]
         public void RemoveOnlineSites_NoOnlineSites_NothingRemoved()
         {
-            Mock<IRepository> repositoryMock = new Mock<IRepository>(MockBehavior.Strict);
-            IRepository repository = repositoryMock.Object;
-
-            List<string> offlineSites = new List<string>();
-            List<string> sitesRecordedAsOffline = new List<string>();
+            List<string> offlineSites = new List<string>()
+            {
+                "offlineSite1", "offlineSite2", "offlineSite3"
+            };
+            List<string> sitesRecordedAsOffline = new List<string>()
+            {
+                "offlineSite1", "offlineSite2", "offlineSite3"
+            };
 
             UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
 
             updateOfflineSiteData.RemoveOnlineSites(sitesRecordedAsOffline, offlineSites);
 
             repositoryMock.Verify(x => x.RemoveOnlineSite(It.IsAny<string>()), Times.Never());
+        }
+
+        [TestMethod]
+        public void RemoveOnlineSites_OnlineSitesRemoved()
+        {
+            string onlineSite1 = "onlineSite1";
+            string onlineSite2 = "onlineSite2";
+
+            List<string> offlineSites = new List<string>()
+            {
+                "offlineSite1", "offlineSite2", "offlineSite3"
+            };
+            List<string> sitesRecordedAsOffline = new List<string>()
+            {
+                "offlineSite1", "offlineSite2", "offlineSite3", onlineSite1, onlineSite2
+            };
+
+            // Need to declare these setup methods or strictMock will throw exception
+            repositoryMock.Setup(x => x.RemoveOnlineSite(onlineSite1));
+            repositoryMock.Setup(x => x.RemoveOnlineSite(onlineSite2));
+
+            UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
+
+            updateOfflineSiteData.RemoveOnlineSites(sitesRecordedAsOffline, offlineSites);
+
+            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite1), Times.Exactly(1));
+            repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite2), Times.Exactly(1));
         }
 
         /// <summary>

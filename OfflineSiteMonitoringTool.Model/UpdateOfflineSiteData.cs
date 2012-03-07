@@ -34,10 +34,12 @@ namespace OfflineSiteMonitoringTool.Model
         public void RemoveOnlineSites(List<string> sitesRecordedAsOffline, List<string> offlineSites)
         {
             // for all sites present in sitesRecordedAsOffline but not in offlineSites, remove those sites from table
-            IEnumerable<string> onlineSites = sitesRecordedAsOffline.Except(offlineSites);
-
+            List<string> onlineSites = (sitesRecordedAsOffline.Except(offlineSites)).ToList<string>();
+            
             foreach (string onlineSite in onlineSites)
+            {
                 _repository.RemoveOnlineSite(onlineSite);
+            }
         }
 
         public void UpdateSitesAlreadyRecordedAsOffline(List<string> sitesRecordedAsOffline, List<string> offlineSites)
