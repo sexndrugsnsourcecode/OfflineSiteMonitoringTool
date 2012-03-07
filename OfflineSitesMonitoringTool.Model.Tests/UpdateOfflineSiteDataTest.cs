@@ -33,14 +33,8 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         [TestMethod]
         public void RemoveOnlineSites_NoOnlineSites_NothingRemoved()
         {
-            List<string> offlineSites = new List<string>()
-            {
-                "offlineSite1", "offlineSite2", "offlineSite3"
-            };
-            List<string> sitesRecordedAsOffline = new List<string>()
-            {
-                "offlineSite1", "offlineSite2", "offlineSite3"
-            };
+            List<string> offlineSites = AddOfflineSites(3);
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
 
             UpdateOfflineSiteData updateOfflineSiteData = new UpdateOfflineSiteData(repository);
 
@@ -55,14 +49,13 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             string onlineSite1 = "onlineSite1";
             string onlineSite2 = "onlineSite2";
 
-            List<string> offlineSites = new List<string>()
-            {
-                "offlineSite1", "offlineSite2", "offlineSite3"
-            };
-            List<string> sitesRecordedAsOffline = new List<string>()
-            {
-                "offlineSite1", "offlineSite2", "offlineSite3", onlineSite1, onlineSite2
-            };
+            List<string> offlineSites = AddOfflineSites(3);
+            //List<string> sitesRecordedAsOffline = new List<string>()
+            //{
+            //    "offlineSite1", "offlineSite2", "offlineSite3", onlineSite1, onlineSite2
+            //};
+            List<string> sitesRecordedAsOffline = AddOfflineSites(3);
+            sitesRecordedAsOffline.AddRange(AddOnlineSites(2));
 
             // Need to declare these setup methods or strictMock will throw exception
             repositoryMock.Setup(x => x.RemoveOnlineSite(onlineSite1));
@@ -74,6 +67,26 @@ namespace OfflineSitesMonitoringTool.Model.Tests
 
             repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite1), Times.Exactly(1));
             repositoryMock.Verify(x => x.RemoveOnlineSite(onlineSite2), Times.Exactly(1));
+        }
+
+        private List<string> AddOfflineSites(int numberOfOfflineSites)
+        {
+            List<string> offlineSites = new List<string>();
+
+            for (int x = 1; x <= numberOfOfflineSites; x++)
+                offlineSites.Add("offlineSite" + x);
+
+            return offlineSites;
+        }
+
+        private List<string> AddOnlineSites(int numberOfOnlineSites)
+        {
+            List<string> onlineSites = new List<string>();
+
+            for (int x = 1; x <= numberOfOnlineSites; x++)
+                onlineSites.Add("onlineSite" + x);
+
+            return onlineSites;
         }
 
         /// <summary>
