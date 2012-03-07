@@ -58,6 +58,7 @@
     <Compile Include="CheckSitesActivityTest.cs" />
     <Compile Include="CheckToolShouldBeRunTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateOfflineSiteDataTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfflineSiteMonitoringTool.Model\OfflineSiteMonitoringTool.Model.csproj">
