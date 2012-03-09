@@ -14,6 +14,7 @@ namespace OfflineSiteMonitoringTool.Model
             _repository = repository;
 
             setSuppliersToReceiveNotifications();
+            setAreThereAnySuppliersToReceiveOfflineNotifications();
             setOfflineSitesToBeReported();
             setAreThereOfflineSitesToBeReported();
             setNumberOfOfflineSitesToBeReportedPerHealthboardLimit();

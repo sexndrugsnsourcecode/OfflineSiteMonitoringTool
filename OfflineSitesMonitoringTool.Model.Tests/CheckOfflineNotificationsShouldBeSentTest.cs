@@ -58,7 +58,36 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         [TestMethod]
         public void AreThereAnySuppliersToReceiveOfflineNotifications_NoSuppliersSetupToReceiveNotifications_ReturnsFalse()
         {
-                    
+            List<string> suppliersToReceiveNotifications = new List<string>();
+
+            // Setup repository to return no suppliers to receive offline notifications
+            repositoryMock.Setup(x => x.GetSuppliersToReceiveOfflineNotifications()).Returns(suppliersToReceiveNotifications);
+
+            CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
+
+            bool result;
+            result = checkOfflineNotificationsShouldBeSent.AreThereAnySuppliersToReceiveOfflineNotifications;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void AreThereAnySuppliersToReceiveOfflineNotifications_SuppliersToReceiveNotificationsExist_ReturnsTrue()
+        {
+            List<string> suppliersToReceiveNotifications = new List<string>()
+            {
+                "supplier1", "supplier2", "supplier3"
+            };
+
+            // Setup repository to return no suppliers to receive offline notifications
+            repositoryMock.Setup(x => x.GetSuppliersToReceiveOfflineNotifications()).Returns(suppliersToReceiveNotifications);
+
+            CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
+
+            bool result;
+            result = checkOfflineNotificationsShouldBeSent.AreThereAnySuppliersToReceiveOfflineNotifications;
+
+            Assert.IsTrue(result);
         }
     }
 }
