@@ -29,6 +29,8 @@ namespace OfflineSiteMonitoringTool.Model
             suppliersToReceiveNotifications = _repository.GetSuppliersToReceiveOfflineNotifications();
         }
 
+        public List<string> GetSuppliersToReceiveOfflineNotifications { get { return suppliersToReceiveNotifications; } }
+
         private bool areThereAnySuppliersToReceiveOfflineNotifications;
 
         private void setAreThereAnySuppliersToReceiveOfflineNotifications()
@@ -39,8 +41,6 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereAnySuppliersToReceiveOfflineNotifications = false;
         }
 
-        public List<string> GetSuppliersToReceiveOfflineNotifications { get { return suppliersToReceiveNotifications; } }
-
         public bool AreThereAnySuppliersToReceiveOfflineNotifications { get { return areThereAnySuppliersToReceiveOfflineNotifications; }}
 
         // Are there any new offline sites to report?
@@ -50,6 +50,8 @@ namespace OfflineSiteMonitoringTool.Model
         {
             offlineSitesToReport = _repository.GetOfflineSitesToReport();
         }
+
+        public List<string> GetOfflineSitesToBeReported { get { return offlineSitesToReport; } }
 
         private bool areThereOfflineSitesToBeReported;
 
