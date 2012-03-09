@@ -94,9 +94,15 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         public void GetOfflineSitesToBeReported_NoSitesToBeReported_ReturnsEmptyList()
         {
             List<string> offlineSitesToBeReported = new List<string>();
+            int numberOfOfflineSitesPerHealthboardLimit = 5;
+            List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
 
             // Setup repository to return no offline sites to be reported
-            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+            repositoryMock.Setup(x => x.GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit()).Returns(numberOfOfflineSitesPerHealthboardLimit);
+            repositoryMock.Setup(x => x.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesPerHealthboardLimit))
+                .Returns(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit))
+                .Returns(offlineSitesToBeReported);
 
             CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
 
@@ -113,9 +119,15 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             {
                 "offlineSite1", "offlineSite2", "offlineSite3"
             };
+            int numberOfOfflineSitesPerHealthboardLimit = 5;
+            List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
 
             // Setup repository to return offline sites to be reported
-            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+            repositoryMock.Setup(x => x.GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit()).Returns(numberOfOfflineSitesPerHealthboardLimit);
+            repositoryMock.Setup(x => x.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesPerHealthboardLimit))
+                .Returns(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit))
+                .Returns(offlineSitesToBeReported);
 
             CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
 
@@ -130,9 +142,11 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         public void AreThereOfflineSitesToBeReported_NoOfflineSitesToBeReported_ReturnsFalse()
         {
             List<string> offlineSitesToBeReported = new List<string>();
+            List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
 
             // Setup repository to return no offline sites to be reported
-            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit))
+                .Returns(offlineSitesToBeReported);
 
             CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
 
@@ -149,9 +163,15 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             {
                 "offlineSite1", "offlineSite2", "offlineSite3"
             };
+            int numberOfOfflineSitesPerHealthboardLimit = 5;
+            List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
 
             // Setup repository to return offline sites to be reported
-            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+            repositoryMock.Setup(x => x.GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit()).Returns(numberOfOfflineSitesPerHealthboardLimit);
+            repositoryMock.Setup(x => x.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesPerHealthboardLimit))
+                .Returns(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit))
+                .Returns(offlineSitesToBeReported);
 
             CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
 
