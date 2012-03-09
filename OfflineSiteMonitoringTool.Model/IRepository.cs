@@ -15,5 +15,9 @@ namespace OfflineSiteMonitoringTool.Model
         void RemoveOnlineSite(string onlineSite);
         void UpdateSiteAlreadyRecordedAsOffline(string offlineSite);
         void RecordNewOfflineSite(string offlineSite);
+        List<string> GetSuppliersToReceiveOfflineNotifications();
+        List<string> GetOfflineSitesToReport();
+        int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
+        List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit();
     }
 }

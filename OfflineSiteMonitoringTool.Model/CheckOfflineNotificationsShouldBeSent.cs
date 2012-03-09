@@ -14,20 +14,21 @@ namespace OfflineSiteMonitoringTool.Model
             _repository = repository;
 
             setSuppliersToReceiveNotifications();
+            setOfflineSitesToBeReported();
+            setAreThereOfflineSitesToBeReported();
+            setNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
+            setHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit();
         }
 
         // Are there suppliers to receive offline notifications?
-
         private List<string> suppliersToReceiveNotifications;
 
         private void setSuppliersToReceiveNotifications()
         {
-            // suppliersToReceiveNotifications = _repository.GetSuppliersToReceiveOfflineNotifications();
+            suppliersToReceiveNotifications = _repository.GetSuppliersToReceiveOfflineNotifications();
         }
 
-        public List<string> GetSuppliersToReceiveOfflineNotifications { get { return suppliersToReceiveNotifications; } }
-
-        private bool areThereAnySuppliersToReceiveOfflineNotifications = false;
+        private bool areThereAnySuppliersToReceiveOfflineNotifications;
 
         private void setAreThereAnySuppliersToReceiveOfflineNotifications()
         {
@@ -37,14 +38,48 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereAnySuppliersToReceiveOfflineNotifications = false;
         }
 
+        public List<string> GetSuppliersToReceiveOfflineNotifications { get { return suppliersToReceiveNotifications; } }
+
         public bool AreThereAnySuppliersToReceiveOfflineNotifications { get { return areThereAnySuppliersToReceiveOfflineNotifications; }}
 
         // Are there any new offline sites to report?
+        private List<string> offlineSitesToReport;
 
-        private List<string> 
+        private void setOfflineSitesToBeReported()
+        {
+            offlineSitesToReport = _repository.GetOfflineSitesToReport();
+        }
+
+        private bool areThereOfflineSitesToBeReported;
+
+        private void setAreThereOfflineSitesToBeReported()
+        {
+            if ((offlineSitesToReport != null) && (offlineSitesToReport.Count > 0))
+                areThereOfflineSitesToBeReported = true;
+            else
+                areThereOfflineSitesToBeReported = false;
+        }
+
+        public bool AreThereOfflineSitesToBeReported { get { return areThereOfflineSitesToBeReported; } }
 
         // Is the number of offline sites per healthboard limit active?
+        private int numberOfOfflineSitesToBeReportedPerHealthboardLimit;
+
+        private void setNumberOfOfflineSitesToBeReportedPerHealthboardLimit()
+        {
+            numberOfOfflineSitesToBeReportedPerHealthboardLimit = _repository.GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
+        }
 
         // Have any healthboards exceeded the number of offline sites limit?
+        private List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit;
+
+        private void setHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit()
+        {
+            healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit =
+                _repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit();
+        }
+
+        public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit 
+            { get { return healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit; } }
     }
 }
