@@ -114,7 +114,7 @@ namespace OfflineSitesMonitoringTool.Model.Tests
                 "offlineSite1", "offlineSite2", "offlineSite3"
             };
 
-            // Setup repository to return no offline sites to be reported
+            // Setup repository to return offline sites to be reported
             repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
 
             CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
@@ -124,6 +124,41 @@ namespace OfflineSitesMonitoringTool.Model.Tests
 
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual(offlineSitesToBeReported, result);
+        }
+
+        [TestMethod]
+        public void AreThereOfflineSitesToBeReported_NoOfflineSitesToBeReported_ReturnsFalse()
+        {
+            List<string> offlineSitesToBeReported = new List<string>();
+
+            // Setup repository to return no offline sites to be reported
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+
+            CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
+
+            bool result;
+            result = checkOfflineNotificationsShouldBeSent.AreThereOfflineSitesToBeReported;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void AreThereOfflineSitesToBeReported_OfflineSitesToBeReportedExist_ReturnsTrue()
+        {
+            List<string> offlineSitesToBeReported = new List<string>()
+            {
+                "offlineSite1", "offlineSite2", "offlineSite3"
+            };
+
+            // Setup repository to return offline sites to be reported
+            repositoryMock.Setup(x => x.GetOfflineSitesToReport()).Returns(offlineSitesToBeReported);
+
+            CheckOfflineNotificationsShouldBeSent checkOfflineNotificationsShouldBeSent = new CheckOfflineNotificationsShouldBeSent(repository);
+
+            bool result;
+            result = checkOfflineNotificationsShouldBeSent.AreThereOfflineSitesToBeReported;
+
+            Assert.IsTrue(result);
         }
     }
 }
