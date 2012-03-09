@@ -79,7 +79,7 @@ namespace OfflineSiteMonitoringTool.Model
         private void setHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit()
         {
             healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit =
-                _repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit();
+                _repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesToBeReportedPerHealthboardLimit);
         }
 
         public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit 
