@@ -18,6 +18,6 @@ namespace OfflineSiteMonitoringTool.Model
         List<string> GetSuppliersToReceiveOfflineNotifications();
         int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
         List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(int numberOfOfflineSitesToBeReportedPerHealthboardLimit);
-        List<string> GetOfflineSitesToReport(List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
+        List<SiteDetails> GetOfflineSitesToReport(List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
     }
 }

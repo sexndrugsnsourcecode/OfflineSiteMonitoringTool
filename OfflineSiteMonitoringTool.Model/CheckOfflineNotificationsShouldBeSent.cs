@@ -60,14 +60,14 @@ namespace OfflineSiteMonitoringTool.Model
         }
 
         // Are there any new offline sites to report?
-        private List<string> offlineSitesToReport;
+        private List<SiteDetails> offlineSitesToReport;
 
         private void setOfflineSitesToBeReported()
         {
             offlineSitesToReport = _repository.GetOfflineSitesToReport(healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
         }
 
-        public List<string> GetOfflineSitesToBeReported { get { return offlineSitesToReport; } }
+        public List<SiteDetails> GetOfflineSitesToBeReported { get { return offlineSitesToReport; } }
 
         private bool areThereOfflineSitesToBeReported;
 
