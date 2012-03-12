@@ -19,6 +19,7 @@ namespace OfflineSiteMonitoringTool.Model
             setHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit();
             setOfflineSitesToBeReported();
             setAreThereOfflineSitesToBeReported();
+            setShouldOfflineNotificationsBeSent();
         }
 
         // Are there suppliers to receive offline notifications?
@@ -41,8 +42,6 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereAnySuppliersToReceiveOfflineNotifications = false;
         }
 
-        // public bool AreThereAnySuppliersToReceiveOfflineNotifications { get { return areThereAnySuppliersToReceiveOfflineNotifications; }}
-
         // Is the number of offline sites per healthboard limit active?
         private int numberOfOfflineSitesToBeReportedPerHealthboardLimit;
 
@@ -59,9 +58,6 @@ namespace OfflineSiteMonitoringTool.Model
             healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit =
                 _repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesToBeReportedPerHealthboardLimit);
         }
-
-        // public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit 
-        //    { get { return healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit; } }
 
         // Are there any new offline sites to report?
         private List<string> offlineSitesToReport;
@@ -83,6 +79,16 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereOfflineSitesToBeReported = false;
         }
 
-        // public bool AreThereOfflineSitesToBeReported { get { return areThereOfflineSitesToBeReported; } }
+        private bool shouldOfflineNotificationsBeSent;
+
+        private void setShouldOfflineNotificationsBeSent()
+        {
+            if (areThereAnySuppliersToReceiveOfflineNotifications == true && areThereOfflineSitesToBeReported == true)
+                shouldOfflineNotificationsBeSent = true;
+            else
+                shouldOfflineNotificationsBeSent = false;
+        }
+
+        public bool ShouldOfflineNotificationsBeSent { get { return shouldOfflineNotificationsBeSent; } }
     }
 }
