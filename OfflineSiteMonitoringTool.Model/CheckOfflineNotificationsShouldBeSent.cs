@@ -41,7 +41,7 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereAnySuppliersToReceiveOfflineNotifications = false;
         }
 
-        public bool AreThereAnySuppliersToReceiveOfflineNotifications { get { return areThereAnySuppliersToReceiveOfflineNotifications; }}
+        // public bool AreThereAnySuppliersToReceiveOfflineNotifications { get { return areThereAnySuppliersToReceiveOfflineNotifications; }}
 
         // Is the number of offline sites per healthboard limit active?
         private int numberOfOfflineSitesToBeReportedPerHealthboardLimit;
@@ -60,8 +60,8 @@ namespace OfflineSiteMonitoringTool.Model
                 _repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(numberOfOfflineSitesToBeReportedPerHealthboardLimit);
         }
 
-        public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit 
-            { get { return healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit; } }
+        // public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit 
+        //    { get { return healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit; } }
 
         // Are there any new offline sites to report?
         private List<string> offlineSitesToReport;
@@ -83,6 +83,6 @@ namespace OfflineSiteMonitoringTool.Model
                 areThereOfflineSitesToBeReported = false;
         }
 
-        public bool AreThereOfflineSitesToBeReported { get { return areThereOfflineSitesToBeReported; } }
+        // public bool AreThereOfflineSitesToBeReported { get { return areThereOfflineSitesToBeReported; } }
     }
 }
