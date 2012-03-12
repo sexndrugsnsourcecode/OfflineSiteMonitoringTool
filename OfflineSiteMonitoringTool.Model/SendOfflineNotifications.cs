@@ -8,6 +8,8 @@ namespace OfflineSiteMonitoringTool.Model
     public class SendOfflineNotifications
     {
         public SendOfflineNotifications(IRepository repository)
-        {}
+        {
+        
+        }
     }
 }

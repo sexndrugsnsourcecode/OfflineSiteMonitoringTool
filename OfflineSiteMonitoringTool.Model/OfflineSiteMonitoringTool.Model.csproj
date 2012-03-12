@@ -49,6 +49,7 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendOfflineNotifications.cs" />
+    <Compile Include="SiteDetails.cs" />
     <Compile Include="UpdateOfflineSiteData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
