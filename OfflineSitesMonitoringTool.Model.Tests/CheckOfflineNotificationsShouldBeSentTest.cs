@@ -81,9 +81,9 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         public void GetOfflineSitesToBeReported_ReturnsSitesToBeReportedOffline()
         {
             List<SiteDetails> offlineSitesToBeReported = new List<SiteDetails>();
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "testHealthboard", "testSupplier"));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
 
             int numberOfOfflineSitesPerHealthboardLimit = 5;
             List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
@@ -110,9 +110,9 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             List<string> suppliersToReceiveNotifications = new List<string>();
 
             List<SiteDetails> offlineSitesToBeReported = new List<SiteDetails>();
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "testHealthboard", "testSupplier"));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
 
             int numberOfOfflineSitesPerHealthboardLimit = 5;
             List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();
@@ -171,9 +171,9 @@ namespace OfflineSitesMonitoringTool.Model.Tests
             };
 
             List<SiteDetails> offlineSitesToBeReported = new List<SiteDetails>();
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "testHealthboard", "testSupplier"));
-            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "testHealthboard", "testSupplier"));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite1", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite2", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
+            offlineSitesToBeReported.Add(new SiteDetails("offlineSite3", "orgName", "testHealthboard", "testSupplier", "testReference", DateTime.Now));
 
             int numberOfOfflineSitesPerHealthboardLimit = 5;
             List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit = new List<string>();

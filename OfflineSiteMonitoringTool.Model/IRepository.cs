@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net.Mail;
 using Microsoft.Pex.Framework;
 
 namespace OfflineSiteMonitoringTool.Model
@@ -19,5 +20,9 @@ namespace OfflineSiteMonitoringTool.Model
         int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
         List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(int numberOfOfflineSitesToBeReportedPerHealthboardLimit);
         List<SiteDetails> GetOfflineSitesToReport(List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit);
+        MailAddress GetOfflineReportFromAddress();
+        MailAddress GetOfflineReportReplyToAddress();
+        List<MailAddress> GetOfflineReportRecipients(string healthboard, string supplier);
+        void RecordOfflineNotificationHasBeenSentForSite(string offlineSite);
     }
 }
