@@ -1,0 +1,500 @@
+<#
+//*********************************************************
+//
+//    Copyright (c) Microsoft. All rights reserved.
+//    This code is licensed under the Microsoft Public License.
+//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
+//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
+//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
+//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
+//
+//*********************************************************
+// Parts of this code written by Rab Hallett. Some of it
+// taken from the Microsoft ADO.NET C# POCO Generator.
+// http://blogofrab.blogspot.com
+//*********************************************************
+#>
+<#@ template language="C#" debug="true" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#
+
+// --------------------------------------------------------------
+// Change this line to your EDMX file if you used Add -> New Item
+const string inputFile = @"ReportingModel.edmx";
+// --------------------------------------------------------------
+
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataTools ef = new MetadataTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this);
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+
+EdmItemCollection ItemCollection = null;
+if ( inputFile == "$edmxInputFile" + "$" )
+{
+	fileManager.Process();
+	return "#error The T4 generation file was added to the project by using Add -> New Item, "
+		+ "but the inputFile string was not changed to the name of the EDMX file. "
+		+ "Open the \".tt\" file, and change the value of \"inputFile\". Use \"Add Code "
+		+ "Generation Item\" in the EDMX context menu to avoid this error in future.";
+}
+else
+{
+	ItemCollection = loader.CreateEdmItemCollection(inputFile);
+}
+string namespaceName = code.VsNamespaceSuggestion();
+
+EntityContainer container = ItemCollection.GetItems<EntityContainer>().FirstOrDefault();
+if (container == null)
+{
+    return "// No EntityContainer exists in the model, so no code was generated";
+}
+
+WriteHeader();
+WriteHeaderIncludeSystem();
+WriteHeaderIncludeData();
+WriteNamespaceBegin( code, namespaceName );
+WriteQueryableExtension();
+WriteNamespaceEnd( namespaceName );
+
+fileManager.StartNewFile( "I" + container.Name + ".cs");
+
+WriteHeader();
+WriteHeaderIncludeData();
+WriteNamespaceBegin( code, namespaceName );
+WriteInterface( container, code );
+WriteNamespaceEnd( namespaceName );
+
+fileManager.StartNewFile( container.Name + ".cs");
+WriteHeader();
+WriteHeaderIncludeData();
+WriteNamespaceBegin( code, namespaceName );
+WriteConcreteContextBody( container, code, ef, region );
+WriteNamespaceEnd( namespaceName );
+
+fileManager.StartNewFile( container.Name + "Mock.cs");
+WriteHeader();
+WriteHeaderIncludeData();
+WriteAdditionalUsings( code, new string[] { namespaceName + "." + container + "MockObjectSet" } );
+WriteNamespaceBegin( code, namespaceName );
+WriteMockContextBody( container, code );
+WriteNamespaceEnd( namespaceName );
+
+fileManager.StartNewFile( container.Name + "Mock.ObjectSet.cs");
+WriteHeader();
+WriteHeaderIncludeSystem();
+WriteHeaderIncludeContainers();
+WriteHeaderIncludeData();
+WriteNamespaceBegin( code, namespaceName + "." + container + "MockObjectSet" );
+WriteMockObjectSet();
+WriteNamespaceEnd( namespaceName );
+
+fileManager.Process();
+#>
+
+
+<#+
+void WriteInterface( EntityContainer container, CodeGenerationTools code )
+{
+#>
+/// <summary>
+/// The interface for the specialised object context. This contains all of
+/// the <code>ObjectSet</code> properties that are implemented in both the
+/// functional context class and the mock context class.
+/// </summary>
+<#=Accessibility.ForType(container)#> interface I<#=code.Escape(container)#>
+{
+<#+
+    foreach (EntitySet entitySet in container.BaseEntitySets.OfType<EntitySet>())
+    {
+#>
+    IObjectSet<<#=code.Escape(entitySet.ElementType)#>> <#=code.Escape(entitySet)#> { get; }
+<#+
+    }
+#>
+}
+<#+
+}
+#>
+
+<#+
+void WriteMockContextBody( EntityContainer container, CodeGenerationTools code )
+{
+#>
+/// <summary>
+/// The concrete mock context object that implements the context's interface.
+/// Provide an instance of this mock context class to client logic when testing, 
+/// instead of providing a functional context object.
+/// </summary>
+<#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#>Mock : I<#=code.Escape(container)#>
+{
+<#+
+        foreach (EntitySet entitySet in container.BaseEntitySets.OfType<EntitySet>())
+        {
+#>
+    <#=Accessibility.ForReadOnlyProperty(entitySet)#> IObjectSet<<#=code.Escape(entitySet.ElementType)#>> <#=code.Escape(entitySet)#>
+    {
+        get { return <#=code.FieldName(entitySet) #>  ?? (<#=code.FieldName(entitySet)#> = new MockObjectSet<<#=code.Escape(entitySet.ElementType)#>>()); }
+    }
+    private IObjectSet<<#=code.Escape(entitySet.ElementType)#>> <#=code.FieldName(entitySet)#>;
+<#+
+        }
+#>
+}
+<#+
+}
+#>
+
+
+<#+
+void WriteConcreteContextBody( EntityContainer container, CodeGenerationTools code, MetadataTools ef, CodeRegion region )
+{
+
+#>
+/// <summary>
+/// The functional concrete object context. This is just like the normal
+/// context that would be generated using the POCO artefact generator, 
+/// apart from the fact that this one implements an interface containing 
+/// the entity set properties and exposes <code>IObjectSet</code>
+/// instances for entity set properties.
+/// </summary>
+<#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : ObjectContext, I<#=code.Escape(container)#> 
+{
+    public const string ConnectionString = "name=<#=container.Name#>";
+    public const string ContainerName = "<#=container.Name#>";
+
+    #region Constructors
+
+    public <#=code.Escape(container)#>():
+        base(ConnectionString, ContainerName)
+    {
+<#+
+        WriteLazyLoadingEnabled(container);
+#>
+    }
+
+    public <#=code.Escape(container)#>(string connectionString):
+        base(connectionString, ContainerName)
+    {
+<#+
+        WriteLazyLoadingEnabled(container);
+#>
+    }
+
+    public <#=code.Escape(container)#>(EntityConnection connection):
+        base(connection, ContainerName)
+    {
+<#+
+        WriteLazyLoadingEnabled(container);
+#>
+    }
+
+    #endregion
+
+<#+
+        region.Begin("ObjectSet Properties", 2);
+
+        foreach (EntitySet entitySet in container.BaseEntitySets.OfType<EntitySet>())
+        {
+#>
+
+    <#=Accessibility.ForReadOnlyProperty(entitySet)#> IObjectSet<<#=code.Escape(entitySet.ElementType)#>> <#=code.Escape(entitySet)#>
+    {
+        get { return <#=code.FieldName(entitySet) #> ?? (<#=code.FieldName(entitySet)#> = CreateObjectSet<<#=code.Escape(entitySet.ElementType)#>>("<#=entitySet.Name#>")); }
+    }
+    private ObjectSet<<#=code.Escape(entitySet.ElementType)#>> <#=code.FieldName(entitySet)#>;
+<#+
+        }
+
+        region.End();
+
+        region.Begin("Function Imports");
+
+        foreach (EdmFunction edmFunction in container.FunctionImports)
+        {
+            var parameters = FunctionImportParameter.Create(edmFunction.Parameters, code, ef);
+            string paramList = String.Join(", ", parameters.Select(p => p.FunctionParameterType + " " + p.FunctionParameterName).ToArray());
+            if (edmFunction.ReturnParameter == null)
+            {
+                continue;
+            }
+            string returnTypeElement = code.Escape(ef.GetElementType(edmFunction.ReturnParameter.TypeUsage));
+
+#>
+    <#=Accessibility.ForMethod(edmFunction)#> ObjectResult<<#=returnTypeElement#>> <#=code.Escape(edmFunction)#>(<#=paramList#>)
+    {
+<#+
+            foreach (var parameter in parameters)
+            {
+                if (!parameter.NeedsLocalVariable)
+                {
+                    continue;
+                }
+#>
+
+        ObjectParameter <#=parameter.LocalVariableName#>;
+
+        if (<#=parameter.IsNullableOfT ? parameter.FunctionParameterName + ".HasValue" : parameter.FunctionParameterName + " != null"#>)
+        {
+            <#=parameter.LocalVariableName#> = new ObjectParameter("<#=parameter.EsqlParameterName#>", <#=parameter.FunctionParameterName#>);
+        }
+        else
+        {
+            <#=parameter.LocalVariableName#> = new ObjectParameter("<#=parameter.EsqlParameterName#>", typeof(<#=parameter.RawClrTypeName#>));
+        }
+<#+
+            }
+#>
+        return base.ExecuteFunction<<#=returnTypeElement#>>("<#=edmFunction.Name#>"<#=code.StringBefore(", ", String.Join(", ", parameters.Select(p => p.ExecuteParameterName).ToArray()))#>);
+    }
+<#+
+		}
+
+        region.End();
+#>
+}
+<#+
+}
+#>
+
+<#+
+void WriteMockObjectSet()
+{
+#>
+/// <summary>
+/// Concrete object set for use with Mock contexts. Implements all of the
+/// required interfaces, but performs no database functionality; instead
+/// merely stores the data for testing.
+/// </summary>
+public partial class MockObjectSet<T> : IObjectSet <T> 
+    where T : class
+{
+    private readonly IList<T> m_container = new List<T>();
+
+    #region IObjectSet<T> Members
+    /// <summary>
+    /// Notifies the set that an object that represents a new entity must 
+    /// be added to the set.
+    /// </summary>
+    public void AddObject(T entity)
+    {
+        m_container.Add(entity);
+    }
+
+    /// <summary>
+    /// Notifies the set that an object that represents an existing entity
+    /// must be added to the set.
+    /// </summary>
+    public void Attach(T entity)
+    {
+        m_container.Add(entity);
+    }
+
+    /// <summary>
+    /// Notifies the set that an object that represents an existing entity 
+    /// must be deleted from the set.
+    /// </summary>
+    public void DeleteObject(T entity)
+    {
+        m_container.Remove(entity);
+    }
+
+    /// <summary>
+    /// Notifies the set that an object that represents an existing entity must be
+    /// detached from the set.
+    /// </summary>
+    /// <param name="entity"></param>
+    public void Detach(T entity)
+    {
+        m_container.Remove(entity);
+    }
+    #endregion
+
+    #region IEnumerable<T> Members
+    /// <summary>
+    /// Returns an enumerator that iterates through the collection.
+    /// </summary>
+    public IEnumerator<T> GetEnumerator()
+    {
+        return m_container.GetEnumerator();
+    }
+    #endregion
+
+    #region IEnumerable Members
+    /// <summary>
+    /// Returns an enumerator that iterates through the collection.
+    /// </summary>
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return m_container.GetEnumerator();
+    }
+    #endregion
+
+    #region IQueryable<T> Members
+    /// <summary>
+    /// Gets the type of the element(s) that are returned when the expression 
+    /// tree associated with this instance of System.Linq.IQueryable is executed.
+    /// </summary>
+    public Type ElementType
+    {
+        get { return typeof(T); }
+    }
+
+    /// <summary>
+    /// Gets the expression tree that is associated with the instance of 
+    /// <code>System.Linq.IQueryable.</code>
+    /// </summary>
+    public System.Linq.Expressions.Expression Expression
+    {
+        get { return m_container.AsQueryable<T>().Expression; }
+    }
+
+    /// <summary>
+    /// Gets the query provider that is associated with this data source.
+    /// </summary>
+    public IQueryProvider Provider
+    {
+        get { return m_container.AsQueryable<T>().Provider; }
+    }
+    #endregion
+}
+<#+
+}
+#>
+
+<#+
+private void WriteLazyLoadingEnabled(EntityContainer container)
+{
+   string lazyLoadingAttributeValue = null;
+   string lazyLoadingAttributeName = MetadataConstants.EDM_ANNOTATION_09_02 + ":LazyLoadingEnabled";
+   if(MetadataTools.TryGetStringMetadataPropertySetting(container, lazyLoadingAttributeName, out lazyLoadingAttributeValue))
+   {
+       bool isLazyLoading = false;
+       if(bool.TryParse(lazyLoadingAttributeValue, out isLazyLoading))
+       {
+#>
+        this.ContextOptions.LazyLoadingEnabled = <#=isLazyLoading.ToString().ToLowerInvariant()#>;
+<#+
+       }
+   }
+}
+#>
+
+<#+
+void WriteHeader()
+{
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated from a template.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+// Architectural overview and usage guide: 
+// http://blogofrab.blogspot.com/2010/08/maintenance-free-mocking-for-unit.html
+//------------------------------------------------------------------------------
+<#+
+}
+#>
+
+<#+
+void WriteHeaderIncludeSystem()
+{
+#>
+using System;
+using System.Linq;
+<#+
+}
+#>
+
+<#+
+void WriteHeaderIncludeContainers()
+{
+#>
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+<#+
+}
+#>
+
+<#+
+void WriteHeaderIncludeData()
+{
+#>
+using System.Data.EntityClient;
+using System.Data.Objects;
+<#+
+}
+#>
+
+<#+
+void WriteAdditionalUsings( CodeGenerationTools code, string[] additionalUsings )
+{
+	if ( additionalUsings != null )
+	{
+		foreach( string additionalUsing in additionalUsings )
+		{
+#>
+using <#=code.EscapeNamespace(additionalUsing)#>;
+<#+
+		}
+	}
+}
+#>
+
+<#+
+void WriteQueryableExtension()
+{
+#>
+/// <summary>
+/// Additional extension for interface <code>IQueryableExtension</code>, to
+/// allow includes on <code>IObjectSet</code> when using mocking contexts.
+/// </summary>
+public static class IQueryableExtension
+{
+    public static IQueryable<T> Include<T>
+        (this IQueryable<T> source, string path)
+        where T : class
+    {
+        ObjectQuery<T> objectQuery = source as ObjectQuery<T>;
+        if (objectQuery != null)
+        {
+            return objectQuery.Include(path);
+        }
+        return source;
+    }
+}
+<#+
+}
+#>
+
+<#+
+void WriteNamespaceBegin( CodeGenerationTools code, string namespaceName )
+{
+	if (!String.IsNullOrEmpty(namespaceName))
+	{
+#>
+
+namespace <#=code.EscapeNamespace(namespaceName)#>
+{
+<#+
+		PushIndent(CodeRegion.GetIndent(1));
+	}
+}
+#>
+
+<#+
+void WriteNamespaceEnd( string namespaceName )
+{
+	if (!String.IsNullOrEmpty(namespaceName))
+	{
+		PopIndent();
+#>
+}
+<#+
+	}
+}
+#>
