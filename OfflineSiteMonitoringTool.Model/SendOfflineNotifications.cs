@@ -30,15 +30,6 @@ namespace OfflineSiteMonitoringTool.Model
             return offlineReports;
         }
 
-        public void SendOfflineReports(Dictionary<string, MailMessage> offlineReports)
-        {
-            foreach (KeyValuePair<string, MailMessage> offlineReport in offlineReports)
-            {
-                _smtpClient.Send(offlineReport.Value);
-                _repository.RecordOfflineNotificationHasBeenSentForSite(offlineReport.Key);
-            }
-        }
-
         private MailMessage CreateOfflineReport(SiteDetails siteToBeReportedOffline)
         {
             MailMessage offlineReport = new MailMessage();
@@ -76,7 +67,7 @@ namespace OfflineSiteMonitoringTool.Model
         {
             string emailSubject;
             
-            emailSubject = "Transmission Fault in ePharmacy CDB" + siteToBeReportedOffline.SupplierReference + 
+            emailSubject = "Transmission Fault in ePharmacy CDB " + siteToBeReportedOffline.SupplierReference + 
                 " (OrgID " + siteToBeReportedOffline.OrgId + ")";
 
             return emailSubject;
@@ -111,7 +102,7 @@ namespace OfflineSiteMonitoringTool.Model
             emailBody =
                 "Transmission Fault in ePharmacy\n\n"
                 + "This site ("
-                + siteToBeReportedOffline.OrgName + ", CDB"
+                + siteToBeReportedOffline.OrgName + ", CDB "
                 + siteToBeReportedOffline.SupplierReference + ", OrgID "
                 + siteToBeReportedOffline.OrgId
                 + ") is reported as being offline. The last AMS message was received on "
@@ -136,6 +127,15 @@ namespace OfflineSiteMonitoringTool.Model
                 + "\n Please arrange for this to be investigated and brought back online as soon as possible.";
 
             return emailBody;
+        }
+
+        public void SendOfflineReports(Dictionary<string, MailMessage> offlineReports)
+        {
+            foreach (KeyValuePair<string, MailMessage> offlineReport in offlineReports)
+            {
+                _smtpClient.Send(offlineReport.Value);
+                _repository.RecordOfflineNotificationHasBeenSentForSite(offlineReport.Key);
+            }
         }
     }
 }
