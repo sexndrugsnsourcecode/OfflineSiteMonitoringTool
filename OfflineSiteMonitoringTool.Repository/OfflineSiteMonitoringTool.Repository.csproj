@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A082C8A2-C34A-4894-B06F-8057BE4BA162}</ProjectGuid>
+    <ProjectGuid>{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfflineSiteMonitoringTool.Model</RootNamespace>
-    <AssemblyName>OfflineSiteMonitoringTool.Model</AssemblyName>
+    <RootNamespace>OfflineSiteMonitoringTool.Repository</RootNamespace>
+    <AssemblyName>OfflineSiteMonitoringTool.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,18 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculateLastBusinessDay.cs" />
-    <Compile Include="CheckOfflineNotificationsShouldBeSent.cs" />
-    <Compile Include="CheckSitesActivity.cs" />
-    <Compile Include="CheckToolShouldBeRun.cs" />
-    <Compile Include="IConfigHelper.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="ISMTPClientWrapper.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SendOfflineNotifications.cs" />
-    <Compile Include="SiteDetails.cs" />
-    <Compile Include="SMTPClientWrapper.cs" />
-    <Compile Include="UpdateOfflineSiteData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OfflineSiteMonitoringTool.DataAccessLayer\OfflineSiteMonitoringTool.DataAccessLayer.csproj">
+      <Project>{5C8A09AE-012F-459B-9B54-F3F8B288F239}</Project>
+      <Name>OfflineSiteMonitoringTool.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OfflineSiteMonitoringTool.Model\OfflineSiteMonitoringTool.Model.csproj">
+      <Project>{A082C8A2-C34A-4894-B06F-8057BE4BA162}</Project>
+      <Name>OfflineSiteMonitoringTool.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

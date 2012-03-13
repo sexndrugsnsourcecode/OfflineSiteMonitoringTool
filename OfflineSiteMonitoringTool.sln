@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineSiteMonitoringTool.DataAccessLayer", "OfflineSiteMonitoringTool.DataAccessLayer\OfflineSiteMonitoringTool.DataAccessLayer.csproj", "{5C8A09AE-012F-459B-9B54-F3F8B288F239}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineSiteMonitoringTool.Repository", "OfflineSiteMonitoringTool.Repository\OfflineSiteMonitoringTool.Repository.csproj", "{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OfflineSiteMonitoringTool.vsmdi
@@ -35,6 +37,10 @@ Global
 		{5C8A09AE-012F-459B-9B54-F3F8B288F239}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C8A09AE-012F-459B-9B54-F3F8B288F239}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C8A09AE-012F-459B-9B54-F3F8B288F239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
