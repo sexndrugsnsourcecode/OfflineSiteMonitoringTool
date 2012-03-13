@@ -19,7 +19,7 @@ namespace OfflineSiteMonitoringTool.DataAccessLayer
     /// the <code>ObjectSet</code> properties that are implemented in both the
     /// functional context class and the mock context class.
     /// </summary>
-    public interface IReportingEntities
+    public partial interface IReportingEntities
     {
         IObjectSet<tbEPS_Msg> tbEPS_Msg { get; }
         IObjectSet<tbEPS_Organisation> tbEPS_Organisation { get; }
