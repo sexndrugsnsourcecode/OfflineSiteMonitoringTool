@@ -220,19 +220,63 @@ namespace OfflineSitesMonitoringTool.Model.Tests
         [TestMethod]
         public void SendOfflineReports_NoReportsToSend_DoesntAttemptToSendAnyReports()
         {
-        
+            Dictionary<string, MailMessage> offlineReports = new Dictionary<string, MailMessage>();
+
+            // Setup repository so that we can verify methods were not called later
+            smtpClientMock.Setup(x => x.Send(It.IsAny<MailMessage>()));
+            repositoryMock.Setup(x => x.RecordOfflineNotificationHasBeenSentForSite(It.IsAny<string>()));
+
+            SendOfflineNotifications sendOfflineNotifications = new SendOfflineNotifications(repository, smtpClient);
+
+            sendOfflineNotifications.SendOfflineReports(offlineReports);
+
+            smtpClientMock.Verify(x => x.Send(It.IsAny<MailMessage>()), Times.Never());
+            repositoryMock.Verify(x => x.RecordOfflineNotificationHasBeenSentForSite(It.IsAny<string>()), Times.Never());
         }
 
         [TestMethod]
         public void SendOfflineReports_SingleOfflineReportToSend_SendsReport()
         {
+            string orgId = "1111";
+            MailMessage offlineReport = new MailMessage();
 
+            Dictionary<string, MailMessage> offlineReports = new Dictionary<string, MailMessage>();
+            offlineReports.Add(orgId, offlineReport);
+
+            // Setup repository so that we can verify methods were not called later
+            smtpClientMock.Setup(x => x.Send(offlineReport));
+            repositoryMock.Setup(x => x.RecordOfflineNotificationHasBeenSentForSite(orgId));
+
+            SendOfflineNotifications sendOfflineNotifications = new SendOfflineNotifications(repository, smtpClient);
+
+            sendOfflineNotifications.SendOfflineReports(offlineReports);
+
+            smtpClientMock.Verify(x => x.Send(offlineReport), Times.Once());
+            repositoryMock.Verify(x => x.RecordOfflineNotificationHasBeenSentForSite(orgId), Times.Once());
         }
 
         [TestMethod]
         public void SendOfflineReports_MultipleOfflineReportsToSend_SendsReports()
         {
+            string orgId1 = "1111";
+            MailMessage offlineReport1 = new MailMessage();
+            string orgId2 = "2222";
+            MailMessage offlineReport2 = new MailMessage();
 
+            Dictionary<string, MailMessage> offlineReports = new Dictionary<string, MailMessage>();
+            offlineReports.Add(orgId1, offlineReport1);
+            offlineReports.Add(orgId2, offlineReport2);
+
+            // Setup repository so that we can verify methods were not called later
+            smtpClientMock.Setup(x => x.Send(It.IsAny<MailMessage>()));
+            repositoryMock.Setup(x => x.RecordOfflineNotificationHasBeenSentForSite(It.IsAny<string>()));
+
+            SendOfflineNotifications sendOfflineNotifications = new SendOfflineNotifications(repository, smtpClient);
+
+            sendOfflineNotifications.SendOfflineReports(offlineReports);
+
+            smtpClientMock.Verify(x => x.Send(It.IsAny<MailMessage>()), Times.Exactly(2));
+            repositoryMock.Verify(x => x.RecordOfflineNotificationHasBeenSentForSite(It.IsAny<string>()), Times.Exactly(2));
         }
     }
 }
