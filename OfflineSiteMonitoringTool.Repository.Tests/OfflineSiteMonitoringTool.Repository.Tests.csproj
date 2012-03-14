@@ -3,15 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}</ProjectGuid>
+    <ProjectGuid>{A0E6B1E5-AF99-40A2-B143-BA7898DF1520}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfflineSiteMonitoringTool.Repository</RootNamespace>
-    <AssemblyName>OfflineSiteMonitoringTool.Repository</AssemblyName>
+    <RootNamespace>OfflineSiteMonitoringTool.Repository.Tests</RootNamespace>
+    <AssemblyName>OfflineSiteMonitoringTool.Repository.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,20 +33,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetLastBusinessDay.cs" />
-    <Compile Include="HasDataBeenUpdatedSinceLastBusinessDay.cs" />
-    <Compile Include="Repository.cs" />
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HasDataBeenUpdatedSinceLastBusinessDayTests.cs" />
+    <Compile Include="Test Helpers\AddDataTo_tbEPSMsg.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfflineSiteMonitoringTool.DataAccessLayer\OfflineSiteMonitoringTool.DataAccessLayer.csproj">
@@ -55,8 +64,12 @@
       <Project>{A082C8A2-C34A-4894-B06F-8057BE4BA162}</Project>
       <Name>OfflineSiteMonitoringTool.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OfflineSiteMonitoringTool.Repository\OfflineSiteMonitoringTool.Repository.csproj">
+      <Project>{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}</Project>
+      <Name>OfflineSiteMonitoringTool.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
