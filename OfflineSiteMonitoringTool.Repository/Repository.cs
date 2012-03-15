@@ -67,6 +67,7 @@ namespace OfflineSiteMonitoringTool.Repository
         }
 
         // Called by: List<string> GetSitesToCheckMessagingActivityFor()
+        // Called by: List<string> GetSitesRecordedAsOffline()
         private List<string> ExecuteDbQuery(Func<List<string>> query)
         {
             int attempts = 0;
@@ -100,7 +101,7 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
-
+        // Called by: List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay)
         private List<string> ExecuteDbQuery(Func<List<string>, DateTime, List<string>> query, List<string> list, DateTime date)
         {
             int attempts = 0;
@@ -134,12 +135,41 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
+
+        private void ExecuteDbQuery(Action<string> query, string str)
+        {
+            int attempts = 0;
+
+            while (true)
+            {
+                try
+                {
+                    query(str);
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    if (attempts <= numberOfRetriesAfterDatabaseError)
+                    {
+                        // Retry query
+                        attempts++;
+                        // _log.Add("Attempt: " + attempts + " : " + ex.Message);
+                        continue;
+                    }
+                    else
+                    {
+                        // Log error details and throw error
+                        // _log.Add("Max Attempts Reached : " + ex.Message);
+                        throw (ex);
+                    }
+                }
+            }
+        }
+
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        
-        //public List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay) { return new List<string>(); }
-        //public List<string> GetSitesRecordedAsOffline() { return new List<string>(); }
-        public void RemoveOnlineSite(string onlineSite) { }
+        //public void RemoveOnlineSite(string onlineSite) { }
         public void UpdateSiteAlreadyRecordedAsOffline(string offlineSite) { }
         public void RecordNewOfflineSite(string offlineSite) { }
         public List<string> GetSuppliersToReceiveOfflineNotifications() { return new List<string>(); }
