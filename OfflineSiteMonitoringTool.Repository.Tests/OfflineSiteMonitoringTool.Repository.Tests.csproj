@@ -51,6 +51,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetOfflineSitesTests.cs" />
     <Compile Include="GetSitesToCheckMessagingActivityForTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HasDataBeenUpdatedSinceLastBusinessDayTests.cs" />

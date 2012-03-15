@@ -49,6 +49,7 @@
     <Compile Include="IConfigHelper.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ISMTPClientWrapper.cs" />
+    <Compile Include="MessageTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendOfflineNotifications.cs" />
     <Compile Include="SiteDetails.cs" />

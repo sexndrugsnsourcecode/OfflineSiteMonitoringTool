@@ -22,7 +22,6 @@ namespace OfflineSiteMonitoringTool.Repository
                                                     where x.endDate == null
                                                     && x.archived == false
                                                     && x.dispensing == false
-                                                    orderby x.id
                                                     select x.id).ToList<string>();
 
             List<string> sitesToCheckMessagingActivityFor = CleanData(sitesToCheckMessagingActivityForRaw);

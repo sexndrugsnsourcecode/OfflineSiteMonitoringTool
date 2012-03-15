@@ -27,6 +27,8 @@ namespace OfflineSiteMonitoringTool.Repository
             foreach (string str in dataToClean)
                 cleanedData.Add(str.Trim());
 
+            cleanedData.Sort();
+
             return cleanedData;
         }
 
@@ -64,7 +66,7 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
-
+        // Called by: List<string> GetSitesToCheckMessagingActivityFor()
         private List<string> ExecuteDbQuery(Func<List<string>> query)
         {
             int attempts = 0;
@@ -98,12 +100,44 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
+
+        private List<string> ExecuteDbQuery(Func<List<string>, DateTime, List<string>> query, List<string> list, DateTime date)
+        {
+            int attempts = 0;
+
+            List<string> result = new List<string>();
+
+            while (true)
+            {
+                try
+                {
+                    result = query(list, date);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    if (attempts <= numberOfRetriesAfterDatabaseError)
+                    {
+                        // Retry query
+                        attempts++;
+                        // _log.Add("Attempt: " + attempts + " : " + ex.Message);
+                        continue;
+                    }
+                    else
+                    {
+                        // Log error details and throw error
+                        // _log.Add("Max Attempts Reached : " + ex.Message);
+                        throw (ex);
+                    }
+                }
+            }
+        }
+
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        // public DateTime GetLastBusinessDay(DateTime currentDate) {  }
-        // public Boolean HasDataBeenUpdatedSinceLastBusinessDay(DateTime lastBusinessDay) { return false; }
-        // public List<string> GetSitesToCheckMessagingActivityFor() { return new List<string>(); }
-        public List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay) { return new List<string>(); }
+        
+        //public List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay) { return new List<string>(); }
         public List<string> GetSitesRecordedAsOffline() { return new List<string>(); }
         public void RemoveOnlineSite(string onlineSite) { }
         public void UpdateSiteAlreadyRecordedAsOffline(string offlineSite) { }

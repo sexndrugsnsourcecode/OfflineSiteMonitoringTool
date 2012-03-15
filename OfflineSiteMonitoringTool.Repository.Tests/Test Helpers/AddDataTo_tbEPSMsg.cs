@@ -56,5 +56,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             return row;
         }
+
+        public static tbEPS_Msg AddRow(DateTime date, byte msgTypeRid, string orgId)
+        {
+            tbEPS_Msg row = AddRow(date);
+            row.msgTypeRid = msgTypeRid;
+            row.msgTxSenderId = orgId;
+
+            return row;
+        }
     }
 }
