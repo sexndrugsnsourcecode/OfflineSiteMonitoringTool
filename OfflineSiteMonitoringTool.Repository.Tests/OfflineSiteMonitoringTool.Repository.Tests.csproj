@@ -51,9 +51,11 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetSitesToCheckMessagingActivityForTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HasDataBeenUpdatedSinceLastBusinessDayTests.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbEPSMsg.cs" />
+    <Compile Include="Test Helpers\AddDataTo_tbEPSOrganisation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfflineSiteMonitoringTool.DataAccessLayer\OfflineSiteMonitoringTool.DataAccessLayer.csproj">
