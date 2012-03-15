@@ -12,7 +12,7 @@ namespace OfflineSiteMonitoringTool.Repository
     {
         private IReportingEntities _reportingEntity;
         
-        // Load following from config file
+        // todo: Load following from config file
         int numberOfRetriesAfterDatabaseError = 5;
 
         public Repository(IReportingEntities reportingEntity)
@@ -138,7 +138,7 @@ namespace OfflineSiteMonitoringTool.Repository
         // will remove these methods into their own file as I work through them
         
         //public List<string> GetOfflineSites(List<string> sitesToCheckMessagingActivityFor, DateTime lastBusinessDay) { return new List<string>(); }
-        public List<string> GetSitesRecordedAsOffline() { return new List<string>(); }
+        //public List<string> GetSitesRecordedAsOffline() { return new List<string>(); }
         public void RemoveOnlineSite(string onlineSite) { }
         public void UpdateSiteAlreadyRecordedAsOffline(string offlineSite) { }
         public void RecordNewOfflineSite(string offlineSite) { }
