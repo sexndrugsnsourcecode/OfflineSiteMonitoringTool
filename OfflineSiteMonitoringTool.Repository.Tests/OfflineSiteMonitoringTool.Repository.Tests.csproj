@@ -60,6 +60,7 @@
     <Compile Include="Test Helpers\AddDataTo_tbEPSMsg.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbEPSOrganisation.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbRPTOfflineSites.cs" />
+    <Compile Include="UpdateSiteAlreadyRecordedAsOfflineTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfflineSiteMonitoringTool.DataAccessLayer\OfflineSiteMonitoringTool.DataAccessLayer.csproj">
