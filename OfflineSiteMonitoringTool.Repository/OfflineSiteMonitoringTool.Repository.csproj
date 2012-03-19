@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit.cs" />
     <Compile Include="GetLastBusinessDay.cs" />
     <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit.cs" />
     <Compile Include="GetOfflineSites.cs" />

@@ -68,6 +68,40 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
+
+        private List<string> ExecuteDbQuery(Func<int, List<string>> query, int num)
+        {
+            int attempts = 0;
+
+            List<string> result = new List<string>();
+
+            while (true)
+            {
+                try
+                {
+                    result = query(num);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    if (attempts <= numberOfRetriesAfterDatabaseError)
+                    {
+                        // Retry query
+                        attempts++;
+                        // _log.Add("Attempt: " + attempts + " : " + ex.Message);
+                        continue;
+                    }
+                    else
+                    {
+                        // Log error details and throw error
+                        // _log.Add("Max Attempts Reached : " + ex.Message);
+                        throw (ex);
+                    }
+                }
+            }
+        }
+
         // Called by: List<string> GetSitesToCheckMessagingActivityFor()
         // Called by: List<string> GetSitesRecordedAsOffline()
         // Called by: List<string> GetSuppliersToReceiveOfflineNotifications()
@@ -174,8 +208,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        // public int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit() { return 0; }
-        public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(int numberOfOfflineSitesToBeReportedPerHealthboardLimit) { return new List<string>(); }
+        // public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(int numberOfOfflineSitesToBeReportedPerHealthboardLimit) { return new List<string>(); }
         public List<SiteDetails> GetOfflineSitesToReport(List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit) { return new List<SiteDetails>(); }
         public MailAddress GetOfflineReportFromAddress() { return new MailAddress("test.test.com"); }
         public MailAddress GetOfflineReportReplyToAddress() { return new MailAddress("test.test.com"); }
