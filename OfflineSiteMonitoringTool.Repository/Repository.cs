@@ -137,6 +137,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Called by: void RemoveOnlineSite(string onlineSite)
         // Called by: void UpdateSiteAlreadyRecordedAsOffline(string offlineSite)
+        // Called by: void RecordNewOfflineSite(string offlineSite)
         private void ExecuteDbQuery(Action<string> query, string str)
         {
             int attempts = 0;
@@ -170,8 +171,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        //public void RecordNewOfflineSite(string offlineSite) { }
-        public List<string> GetSuppliersToReceiveOfflineNotifications() { return new List<string>(); }
+        // public List<string> GetSuppliersToReceiveOfflineNotifications() { return new List<string>(); }
         public int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit() { return 0; }
         public List<string> GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(int numberOfOfflineSitesToBeReportedPerHealthboardLimit) { return new List<string>(); }
         public List<SiteDetails> GetOfflineSitesToReport(List<string> healthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit) { return new List<SiteDetails>(); }
