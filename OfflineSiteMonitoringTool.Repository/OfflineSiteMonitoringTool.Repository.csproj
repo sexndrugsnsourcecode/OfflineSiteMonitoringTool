@@ -46,6 +46,7 @@
     <Compile Include="GetSitesRecordedAsOffline.cs" />
     <Compile Include="GetSitesToCheckMessagingActivityFor.cs" />
     <Compile Include="HasDataBeenUpdatedSinceLastBusinessDay.cs" />
+    <Compile Include="RecordNewOfflineSite.cs" />
     <Compile Include="RemoveOnlineSite.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
