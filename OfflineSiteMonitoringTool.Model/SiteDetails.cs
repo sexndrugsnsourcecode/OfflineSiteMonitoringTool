@@ -12,16 +12,16 @@ namespace OfflineSiteMonitoringTool.Model
         private string _healthboard;
         private string _supplier;
         private string _supplierReference;
-        private DateTime _lastMessageDate;
+        private DateTime? _lastMessageDate;
 
         public string OrgId { get { return _orgId; } }
         public string OrgName { get { return _orgName; } }
         public string Healthboard { get { return _healthboard; } }
         public string Supplier { get { return _supplier; } }
         public string SupplierReference { get { return _supplierReference; } }
-        public DateTime LastMessageDate { get { return _lastMessageDate; } }
+        public DateTime? LastMessageDate { get { return _lastMessageDate; } }
 
-        public SiteDetails(string orgId, string orgName, string healthboard, string supplier, string supplierReference, DateTime lastMessageDate)
+        public SiteDetails(string orgId, string orgName, string healthboard, string supplier, string supplierReference, DateTime? lastMessageDate)
         {
             _orgId = orgId;
             _orgName = orgName;

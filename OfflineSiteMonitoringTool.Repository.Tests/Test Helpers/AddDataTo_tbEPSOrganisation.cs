@@ -57,12 +57,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             return row;
         }
 
-        public static tbEPS_Organisation AddRow(string id, string healthboard, string supplier)
+        public static tbEPS_Organisation AddRow(string id, string healthboard, string supplier, string orgName = "test", string supplierRef = "test")
         {
             tbEPS_Organisation row = AddRow();
             row.id = id;
             row.healthBoardName = healthboard;
             row.supplier = supplier;
+            row.name = orgName;
+            row.supplierReference = supplierRef;
 
             return row;
         }
