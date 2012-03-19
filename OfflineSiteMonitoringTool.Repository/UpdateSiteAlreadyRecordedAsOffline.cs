@@ -9,7 +9,7 @@ namespace OfflineSiteMonitoringTool.Repository
     {
         public void UpdateSiteAlreadyRecordedAsOffline(string offlineSite)
         {
-            ExecuteDbQuery(updateSiteAlreadyRecordedAssOffline, offlineSite);
+            ExecuteDbAction(updateSiteAlreadyRecordedAssOffline, offlineSite);
         }
 
         private void updateSiteAlreadyRecordedAssOffline(string offlineSite)

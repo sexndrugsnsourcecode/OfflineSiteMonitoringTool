@@ -10,7 +10,7 @@ namespace OfflineSiteMonitoringTool.Repository
     {
         public void RecordNewOfflineSite(string offlineSite)
         {
-            ExecuteDbQuery(recordNewOfflineSite, offlineSite);
+            ExecuteDbAction(recordNewOfflineSite, offlineSite);
         }
 
         private void recordNewOfflineSite(string offlineSite)

@@ -206,11 +206,48 @@ namespace OfflineSiteMonitoringTool.Repository
             }
         }
 
+        // Called by: List<MailAddress> GetOfflineReportRecipients(string healthboard, string supplier)
+        private List<MailAddress> ExecuteDbQuery(Func<string, List<MailAddress>> query, string str)
+        {
+            int attempts = 0;
+
+            List<MailAddress> result = new List<MailAddress>();
+
+            while (true)
+            {
+                try
+                {
+                    result = query(str);
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    if (attempts <= numberOfRetriesAfterDatabaseError)
+                    {
+                        // Retry query
+                        attempts++;
+                        // _log.Add("Attempt: " + attempts + " : " + ex.Message);
+                        continue;
+                    }
+                    else
+                    {
+                        // Log error details and throw error
+                        // _log.Add("Max Attempts Reached : " + ex.Message);
+                        throw (ex);
+                    }
+                }
+            }
+        }
+
         // Called by: void RemoveOnlineSite(string onlineSite)
         // Called by: void UpdateSiteAlreadyRecordedAsOffline(string offlineSite)
         // Called by: void RecordNewOfflineSite(string offlineSite)
-        private void ExecuteDbQuery(Action<string> query, string str)
+        private void ExecuteDbAction(Action<string> query, string str)
         {
+            // TODO:I renamed this as the complier was reporting it was ambigous with List<MailAddress> ExecuteDbQuery(Func<string, List<MailAddress>> query, string str)
+            // fuck knows how! Need to investigate....
+
             int attempts = 0;
 
             while (true)
@@ -242,8 +279,6 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        // public MailAddress GetOfflineReportReplyToAddress() { return new MailAddress("test.test.com"); }
-        public List<MailAddress> GetOfflineReportRecipients(string healthboard, string supplier) { return new List<MailAddress>(); }
         public void RecordOfflineNotificationHasBeenSentForSite(string offlineSite) { }
     }
 }

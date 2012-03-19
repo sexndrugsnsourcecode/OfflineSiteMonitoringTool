@@ -9,7 +9,7 @@ namespace OfflineSiteMonitoringTool.Repository
     {
         public void RemoveOnlineSite(string onlineSite)
         {
-            ExecuteDbQuery(removeOnlineSite, onlineSite);    
+            ExecuteDbAction(removeOnlineSite, onlineSite);    
         }
 
         private void removeOnlineSite(string onlineSite)

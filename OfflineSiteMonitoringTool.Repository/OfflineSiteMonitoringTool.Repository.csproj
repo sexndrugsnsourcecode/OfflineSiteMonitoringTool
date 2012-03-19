@@ -45,6 +45,7 @@
     <Compile Include="GetLastBusinessDay.cs" />
     <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit.cs" />
     <Compile Include="GetOfflineReportFromAddress.cs" />
+    <Compile Include="GetOfflineReportRecipients.cs" />
     <Compile Include="GetOfflineReportReplyToAddress.cs" />
     <Compile Include="GetOfflineSites.cs" />
     <Compile Include="GetOfflineSitesToReport.cs" />

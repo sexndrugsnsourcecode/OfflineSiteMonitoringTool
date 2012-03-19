@@ -58,6 +58,7 @@
     <Compile Include="GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimitTests.cs" />
     <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimitTests.cs" />
     <Compile Include="GetOfflineReportFromAddressTests.cs" />
+    <Compile Include="GetOfflineReportRecipientsTests.cs" />
     <Compile Include="GetOfflineReportReplyToAddressTests.cs" />
     <Compile Include="GetOfflineSitesTests.cs" />
     <Compile Include="GetOfflineSitesToReportTests.cs" />
@@ -72,7 +73,9 @@
     <Compile Include="Test Helpers\AddDataTo_tbEPSOrganisation.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbRPTOfflineSites.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbRPTOfflineSites_SuppliersToReceiveNotifications.cs" />
+    <Compile Include="Test Helpers\AddDataTo_tbRPT_HealthboardContacts.cs" />
     <Compile Include="Test Helpers\AddDataTo_tbRPT_OrgSupplier.cs" />
+    <Compile Include="Test Helpers\AddDataTo_tbRPT_SupplierContacts.cs" />
     <Compile Include="UpdateSiteAlreadyRecordedAsOfflineTests.cs" />
   </ItemGroup>
   <ItemGroup>
