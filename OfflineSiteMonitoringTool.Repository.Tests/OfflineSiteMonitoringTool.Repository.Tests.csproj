@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimitTests.cs" />
     <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimitTests.cs" />
+    <Compile Include="GetOfflineReportFromAddressTests.cs" />
     <Compile Include="GetOfflineSitesTests.cs" />
     <Compile Include="GetOfflineSitesToReportTests.cs" />
     <Compile Include="GetSitesRecordedAsOfflineTests.cs" />

@@ -9,16 +9,22 @@ namespace OfflineSiteMonitoringTool.Model
     public class ConfigHelper : IConfigHelper
     {
         private int numberOfOfflineSitesToBeReportedPerHealthboardLimit;
+        private string offlineReportFromAddress;
 
         public ConfigHelper()
         {
             numberOfOfflineSitesToBeReportedPerHealthboardLimit = Convert.ToInt32(ConfigurationManager.AppSettings["HealthboardOfflineOrganisationsLimit"]);
-            // _log.Add("healthboardOfflineOrganisationsLimit: " + healthboardOfflineOrganisationsLimit.ToString());
+            offlineReportFromAddress = ConfigurationManager.AppSettings["FromEmailAddress"];
         }
 
         public int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit()
         {
             return numberOfOfflineSitesToBeReportedPerHealthboardLimit;
+        }
+
+        public string GetFromAddress()
+        {
+            return offlineReportFromAddress;
         }
     }
 }

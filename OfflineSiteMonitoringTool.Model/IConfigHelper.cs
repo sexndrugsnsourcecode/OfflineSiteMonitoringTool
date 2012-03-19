@@ -9,7 +9,7 @@ namespace OfflineSiteMonitoringTool.Model
     {
         int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
         //Int16 GetNumberOfRetriesAfterDatabaseError();
-        //string GetFromAddress();
+        string GetFromAddress();
         //string GetReplyToAddress();
     }
 }
