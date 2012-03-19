@@ -242,8 +242,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        // public MailAddress GetOfflineReportFromAddress() { return new MailAddress("test.test.com"); }
-        public MailAddress GetOfflineReportReplyToAddress() { return new MailAddress("test.test.com"); }
+        // public MailAddress GetOfflineReportReplyToAddress() { return new MailAddress("test.test.com"); }
         public List<MailAddress> GetOfflineReportRecipients(string healthboard, string supplier) { return new List<MailAddress>(); }
         public void RecordOfflineNotificationHasBeenSentForSite(string offlineSite) { }
     }

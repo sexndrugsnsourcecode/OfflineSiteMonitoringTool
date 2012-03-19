@@ -10,6 +10,7 @@ namespace OfflineSiteMonitoringTool.Model
     {
         private int numberOfOfflineSitesToBeReportedPerHealthboardLimit;
         private string offlineReportFromAddress;
+        private string offlineReportReplyToAddress;
 
         public ConfigHelper()
         {
@@ -25,6 +26,11 @@ namespace OfflineSiteMonitoringTool.Model
         public string GetFromAddress()
         {
             return offlineReportFromAddress;
+        }
+
+        public string GetReplyToAddress()
+        {
+            return offlineReportReplyToAddress;
         }
     }
 }

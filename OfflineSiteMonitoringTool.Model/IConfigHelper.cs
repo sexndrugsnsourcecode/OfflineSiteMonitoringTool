@@ -10,6 +10,6 @@ namespace OfflineSiteMonitoringTool.Model
         int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
         //Int16 GetNumberOfRetriesAfterDatabaseError();
         string GetFromAddress();
-        //string GetReplyToAddress();
+        string GetReplyToAddress();
     }
 }
