@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetLastBusinessDay.cs" />
+    <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit.cs" />
     <Compile Include="GetOfflineSites.cs" />
     <Compile Include="GetSitesRecordedAsOffline.cs" />
     <Compile Include="GetSitesToCheckMessagingActivityFor.cs" />

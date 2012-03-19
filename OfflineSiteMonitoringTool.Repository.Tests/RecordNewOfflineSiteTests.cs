@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class RecordNewOfflineSiteTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
@@ -28,8 +32,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             // Add details to tbEPS_Organisation
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, healthboard, supplier));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             repository.RecordNewOfflineSite(orgId);
 
@@ -57,8 +59,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             // Add details of site already recorded as offline to offline sites table
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(siteAlreadyRecordedAsOfflineOrgId, DateTime.Now));
 
-            Repository repository = new Repository(mockReportingEntity);
-
             repository.RecordNewOfflineSite(siteAlreadyRecordedAsOfflineOrgId);
 
             var offlineSiteCount = (from x in mockReportingEntity.tbRPT_OfflineSites
@@ -73,8 +73,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         public void RecordNewOfflineSite_SpecifiedSiteDoesNotExistInOrgTable_LogsError_DoesNotRecordSite()
         {
             string offlineSiteOrgId = "1111";
-
-            Repository repository = new Repository(mockReportingEntity);
 
             repository.RecordNewOfflineSite(offlineSiteOrgId);
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,19 +12,20 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class GetSitesRecordedAsOfflineTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
         public void GetSitesRecordedAsOffline_NoSitesRecordedAsOfflineInTable_ReturnsEmptyList()
         {
             // No need to add any data to table as we want to test what happens when table is empty
-
-            Repository repository = new Repository(mockReportingEntity);
 
             var result = repository.GetSitesRecordedAsOffline();
 
@@ -38,8 +40,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             // Add data to mock instance of table
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             var result = repository.GetSitesRecordedAsOffline();
 
@@ -59,8 +59,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, date));
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, date));
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, date));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             var result = repository.GetSitesRecordedAsOffline();
 

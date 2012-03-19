@@ -34,6 +34,7 @@
     <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,6 +47,7 @@
     <Compile Include="CheckOfflineNotificationsShouldBeSent.cs" />
     <Compile Include="CheckSitesActivity.cs" />
     <Compile Include="CheckToolShouldBeRun.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="IConfigHelper.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ISMTPClientWrapper.cs" />

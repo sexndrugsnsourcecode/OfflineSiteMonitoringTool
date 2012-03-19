@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class GetSitesToCheckMessagingActivityForTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         /// <summary>
@@ -28,8 +32,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime orgEndDate = DateTime.Now;
 
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, orgEndDate));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             List<string> result;
             result = repository.GetSitesToCheckMessagingActivityFor();
@@ -45,8 +47,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             bool archived = true;
 
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, orgEndDate, archived));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             List<string> result;
             result = repository.GetSitesToCheckMessagingActivityFor();
@@ -64,8 +64,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, orgEndDate, archived, dispensing));
 
-            Repository repository = new Repository(mockReportingEntity);
-
             List<string> result;
             result = repository.GetSitesToCheckMessagingActivityFor();
 
@@ -82,8 +80,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId1));
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId2));
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId3));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             List<string> results;
             results = repository.GetSitesToCheckMessagingActivityFor();

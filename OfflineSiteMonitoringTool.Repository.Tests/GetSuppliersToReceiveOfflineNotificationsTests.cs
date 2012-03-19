@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class GetSuppliersToReceiveOfflineNotificationsTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
@@ -25,8 +29,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             // works when there are no suppliers to return.
 
             List<string> suppliersToReceiveNotifications;
-
-            Repository repository = new Repository(mockReportingEntity);
 
             suppliersToReceiveNotifications = repository.GetSuppliersToReceiveOfflineNotifications();
 
@@ -42,8 +44,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                 .AddObject(AddDataTo_tbRPTOfflineSites_SuppliersToReceiveNotifications.AddRow(supplier));
 
             List<string> suppliersToReceiveNotifications;
-
-            Repository repository = new Repository(mockReportingEntity);
 
             suppliersToReceiveNotifications = repository.GetSuppliersToReceiveOfflineNotifications();
 
@@ -66,8 +66,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                 .AddObject(AddDataTo_tbRPTOfflineSites_SuppliersToReceiveNotifications.AddRow(supplier3));
 
             List<string> suppliersToReceiveNotifications;
-
-            Repository repository = new Repository(mockReportingEntity);
 
             suppliersToReceiveNotifications = repository.GetSuppliersToReceiveOfflineNotifications();
 

@@ -35,7 +35,11 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -51,6 +55,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetNumberOfOfflineSitesToBeReportedPerHealthboardLimitTests.cs" />
     <Compile Include="GetOfflineSitesTests.cs" />
     <Compile Include="GetSitesRecordedAsOfflineTests.cs" />
     <Compile Include="GetSitesToCheckMessagingActivityForTests.cs" />
@@ -78,6 +83,9 @@
       <Project>{E53C2AE5-1E50-4139-A73E-41ED6FEDCB8A}</Project>
       <Name>OfflineSiteMonitoringTool.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

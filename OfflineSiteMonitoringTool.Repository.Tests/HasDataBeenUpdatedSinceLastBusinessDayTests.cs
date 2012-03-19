@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -9,19 +10,20 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class HasDataBeenUpdatedSinceLastBusinessDayTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
         public void HasDataBeenUpdatedSinceLastBusinessDay_NoDataExistsInMsgTable_ReturnsFalse()
         {
             DateTime lastBusinessDay = DateTime.Now.AddDays(-1);
-
-            Repository repository = new Repository(mockReportingEntity);
 
             bool result;
             result = repository.HasDataBeenUpdatedSinceLastBusinessDay(lastBusinessDay);
@@ -37,8 +39,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             mockReportingEntity.tbEPS_Msg.AddObject(AddDataTo_tbEPSMsg.AddRow(lastDateTableWasUpdated));
 
-            Repository repository = new Repository(mockReportingEntity);
-
             bool result;
             result = repository.HasDataBeenUpdatedSinceLastBusinessDay(lastBusinessDay);
 
@@ -52,8 +52,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime lastDateTableWasUpdated = DateTime.Now.AddDays(-1);
 
             mockReportingEntity.tbEPS_Msg.AddObject(AddDataTo_tbEPSMsg.AddRow(lastDateTableWasUpdated));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             bool result;
             result = repository.HasDataBeenUpdatedSinceLastBusinessDay(lastBusinessDay);

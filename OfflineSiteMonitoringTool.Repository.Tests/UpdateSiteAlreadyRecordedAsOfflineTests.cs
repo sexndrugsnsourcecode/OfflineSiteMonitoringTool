@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class UpdateSiteAlreadyRecordedAsOfflineTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
@@ -27,8 +31,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             // Add org details to tbRPT_OfflineSites
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             // Call proc
             repository.UpdateSiteAlreadyRecordedAsOffline(orgId);
@@ -53,8 +55,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                 (AddDataTo_tbRPTOfflineSites.AddRow(offlineOrgId, offlineOrgDate, "test", "test", null, offlineOrgDate));
 
             string orgNotInTable = "2222";
-
-            Repository repository = new Repository(mockReportingEntity);
 
             // Call proc
             repository.UpdateSiteAlreadyRecordedAsOffline(orgNotInTable);

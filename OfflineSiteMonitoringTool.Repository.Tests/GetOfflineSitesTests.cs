@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class GetOfflineSitesTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
@@ -32,8 +36,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             List<string> orgs = new List<string>();
             orgs.Add(org);
             DateTime reportDate = DateTime.Now.AddDays(-1);
-
-            Repository repository = new Repository(mockReportingEntity);
 
             var result = repository.GetOfflineSites(orgs, reportDate);
 
@@ -55,8 +57,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             List<string> orgs = new List<string>();
             orgs.Add(orgId);
             DateTime reportDate = DateTime.Now;
-
-            Repository repository = new Repository(mockReportingEntity);
 
             var result = repository.GetOfflineSites(orgs, reportDate);
 
@@ -88,8 +88,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             List<string> sitesToCheckMessagingActivityFor = new List<string>() { orgId1, orgId2, orgId4, orgId3 };
 
             DateTime reportDate = DateTime.Now.AddDays(-3);
-
-            Repository repository = new Repository(mockReportingEntity);
 
             List<string> results = new List<string>();
             results = repository.GetOfflineSites(sitesToCheckMessagingActivityFor, reportDate);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfflineSiteMonitoringTool.DataAccessLayer;
+using OfflineSiteMonitoringTool.Model;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -11,11 +12,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
     public class RemoveOnlineSiteTests
     {
         private IReportingEntities mockReportingEntity;
+        private IConfigHelper configHelper;
+        private IRepository repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            repository = new Repository(mockReportingEntity, configHelper);
         }
 
         [TestMethod]
@@ -26,8 +30,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             //string expectedLogMessage = "Organisation has come back online: " + orgId;
 
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             repository.RemoveOnlineSite(orgId);
 
@@ -48,8 +50,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(onlineSite, date));
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(offlineSite, date));
-
-            Repository repository = new Repository(mockReportingEntity);
 
             repository.RemoveOnlineSite(onlineSite);
 
@@ -74,8 +74,6 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(offlineSite, date));
             //string expectedLogMessage = "Tool tried to remove an organisation from tbRPT_OfflineSites that " +
             //                    "doesn't exist. Organisation: " + org;
-
-            Repository repository = new Repository(mockReportingEntity);
 
             repository.RemoveOnlineSite(siteThatDoesntExistInTable);
 
