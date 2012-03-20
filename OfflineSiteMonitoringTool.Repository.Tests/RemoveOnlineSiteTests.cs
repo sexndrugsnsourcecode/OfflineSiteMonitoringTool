@@ -29,7 +29,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime date = DateTime.Now;
             //string expectedLogMessage = "Organisation has come back online: " + orgId;
 
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId, date));
 
             repository.RemoveOnlineSite(orgId);
 
@@ -48,8 +48,8 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime date = DateTime.Now;
             //string expectedLogMessage = "Organisation has come back online: " + org1;
 
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(onlineSite, date));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(offlineSite, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(onlineSite, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(offlineSite, date));
 
             repository.RemoveOnlineSite(onlineSite);
 
@@ -71,7 +71,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             string siteThatDoesntExistInTable = "1111";
             string offlineSite = "2222";
             DateTime date = DateTime.Now;
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(offlineSite, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(offlineSite, date));
             //string expectedLogMessage = "Tool tried to remove an organisation from tbRPT_OfflineSites that " +
             //                    "doesn't exist. Organisation: " + org;
 

@@ -279,6 +279,6 @@ namespace OfflineSiteMonitoringTool.Repository
 
         // Added dummy implementations of each method required by interface here to get solution to build
         // will remove these methods into their own file as I work through them
-        public void RecordOfflineNotificationHasBeenSentForSite(string offlineSite) { }
+        // public void RecordOfflineNotificationHasBeenSentForSite(string offlineSite) { }
     }
 }

@@ -57,7 +57,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(siteAlreadyRecordedAsOfflineOrgId, healthboard, supplier));
 
             // Add details of site already recorded as offline to offline sites table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(siteAlreadyRecordedAsOfflineOrgId, DateTime.Now));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(siteAlreadyRecordedAsOfflineOrgId, DateTime.Now));
 
             repository.RecordNewOfflineSite(siteAlreadyRecordedAsOfflineOrgId);
 

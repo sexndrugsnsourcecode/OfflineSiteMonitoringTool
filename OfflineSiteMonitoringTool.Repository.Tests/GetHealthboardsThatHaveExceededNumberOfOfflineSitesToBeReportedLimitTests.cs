@@ -47,9 +47,9 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime? dateOfflineNotificationSent = null;
 
             // Add details of offline sites to table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 5;
             List<string> healthboardsThatHaveExceededLimit;
@@ -73,11 +73,11 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime? dateOfflineNotificationSent = null;
 
             // Add details of offline sites to table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 3;
             List<string> healthboardsThatHaveExceededLimit;
@@ -110,12 +110,12 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime? dateOfflineNotificationSent = null;
 
             // Add details of offline sites to table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard1, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard1, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard2, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard2, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard3, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId6, auditCreatedOn, supplier, healthboard3, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard1, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard1, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard2, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard2, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard3, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId6, auditCreatedOn, supplier, healthboard3, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 1;
             List<string> healthboardsThatHaveExceededLimit;
@@ -142,11 +142,11 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime? dateOfflineNotificationSent = null;
 
             // Add details of offline sites to table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId1, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId2, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId3, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId4, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 0;
             List<string> healthboardsThatHaveExceededLimit;

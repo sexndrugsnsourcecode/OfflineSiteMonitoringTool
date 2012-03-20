@@ -30,7 +30,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             //string expectedLogMessage = "Organisation still offline: " + org;
 
             // Add org details to tbRPT_OfflineSites
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId, date));
 
             // Call proc
             repository.UpdateSiteAlreadyRecordedAsOffline(orgId);
@@ -52,7 +52,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
 
             // Add org details to tbRPT_OfflineSites
             mockReportingEntity.tbRPT_OfflineSites.AddObject
-                (AddDataTo_tbRPTOfflineSites.AddRow(offlineOrgId, offlineOrgDate, "test", "test", null, offlineOrgDate));
+                (AddDataTo_tbRPT_OfflineSites.AddRow(offlineOrgId, offlineOrgDate, "test", "test", null, offlineOrgDate));
 
             string orgNotInTable = "2222";
 

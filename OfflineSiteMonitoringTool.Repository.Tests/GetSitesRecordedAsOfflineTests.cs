@@ -39,7 +39,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime date = DateTime.Now;
 
             // Add data to mock instance of table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId, date));
 
             var result = repository.GetSitesRecordedAsOffline();
 
@@ -56,9 +56,9 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             DateTime date = DateTime.Now;
 
             // Add data to mock instance of table
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId1, date));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId2, date));
-            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPTOfflineSites.AddRow(orgId3, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId1, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId2, date));
+            mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId3, date));
 
             var result = repository.GetSitesRecordedAsOffline();
 
