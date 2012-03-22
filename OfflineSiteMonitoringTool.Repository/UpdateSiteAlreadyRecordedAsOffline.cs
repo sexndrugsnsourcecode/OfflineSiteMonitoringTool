@@ -20,8 +20,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (org == null)
             {
-                //_log.Add("Tool attempted to update an organisation that isn't present in " +
-                //    "tbRPT_OfflineSites. Organisation: " + offlineOrg);
+                _log.Add("ERROR: Site has tried to update site: " + offlineSite + " which is not recorded in tbRPT_OfflineSites");
 
                 return;
             }
@@ -30,7 +29,8 @@ namespace OfflineSiteMonitoringTool.Repository
 
             _reportingEntity.SaveChanges();
 
-            //_log.Add("Organisation still offline: " + org.Org);
+            _log.Add("INFO: Site still offline: " + offlineSite);
+
             return;
         }
     }

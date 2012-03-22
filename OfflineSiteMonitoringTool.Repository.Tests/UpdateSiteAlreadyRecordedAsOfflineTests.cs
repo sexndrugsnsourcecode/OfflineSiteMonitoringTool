@@ -30,7 +30,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         {
             string orgId = "1111";
             DateTime date = DateTime.Now.AddDays(-7);
-            //string expectedLogMessage = "Organisation still offline: " + org;
+            string expectedLogMessage = "INFO: Site still offline: " + orgId;
 
             // Add org details to tbRPT_OfflineSites
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId, date));
@@ -43,7 +43,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                               select x).FirstOrDefault();
 
             Assert.AreEqual(DateTime.Now.Date, offlineOrg.AuditUpdatedOn.Value.Date);
-            //log.Verify(x => x.Add(expectedLogMessage));
+            log.Verify(x => x.Add(expectedLogMessage));
         }
 
         [TestMethod]
@@ -51,13 +51,13 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         {
             string offlineOrgId = "1111";
             DateTime offlineOrgDate = DateTime.Now.AddDays(-7);
-            //string expectedLogMessage = "Organisation still offline: " + org;
 
             // Add org details to tbRPT_OfflineSites
             mockReportingEntity.tbRPT_OfflineSites.AddObject
                 (AddDataTo_tbRPT_OfflineSites.AddRow(offlineOrgId, offlineOrgDate, "test", "test", null, offlineOrgDate));
 
             string orgNotInTable = "2222";
+            string expectedLogMessage = "ERROR: Site has tried to update site: " + orgNotInTable + " which is not recorded in tbRPT_OfflineSites";
 
             // Call proc
             repository.UpdateSiteAlreadyRecordedAsOffline(orgNotInTable);
@@ -67,7 +67,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                               select x).FirstOrDefault();
 
             Assert.AreEqual(offlineOrgDate.Date, offlineOrg.AuditUpdatedOn.Value.Date);
-            //log.Verify(x => x.Add(expectedLogMessage));
+            log.Verify(x => x.Add(expectedLogMessage));
         }
     }
 }
