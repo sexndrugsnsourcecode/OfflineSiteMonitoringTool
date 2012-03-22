@@ -16,13 +16,15 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         private IReportingEntities mockReportingEntity;
         private Mock<IConfigHelper> mockConfigHelper;
         private IRepository repository;
+        private Mock<ILogger> log;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
             mockConfigHelper = new Mock<IConfigHelper>();
-            repository = new Repository(mockReportingEntity, mockConfigHelper.Object);
+            log = new Mock<ILogger>();
+            repository = new Repository(mockReportingEntity, mockConfigHelper.Object, log.Object);
         }
 
         [TestMethod]

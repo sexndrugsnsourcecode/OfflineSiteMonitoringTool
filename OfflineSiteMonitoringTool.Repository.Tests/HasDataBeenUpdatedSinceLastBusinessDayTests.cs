@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using OfflineSiteMonitoringTool.DataAccessLayer;
 using OfflineSiteMonitoringTool.Model;
+using Moq;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -12,12 +13,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         private IReportingEntities mockReportingEntity;
         private IConfigHelper configHelper;
         private IRepository repository;
+        private Mock<ILogger> log;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
-            repository = new Repository(mockReportingEntity, configHelper);
+            log = new Mock<ILogger>();
+            repository = new Repository(mockReportingEntity, configHelper, log.Object);
         }
 
         [TestMethod]

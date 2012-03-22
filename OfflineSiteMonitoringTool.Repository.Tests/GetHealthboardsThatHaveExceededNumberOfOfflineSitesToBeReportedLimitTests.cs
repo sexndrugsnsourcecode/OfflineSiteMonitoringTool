@@ -5,6 +5,7 @@ using System.Text;
 using OfflineSiteMonitoringTool.DataAccessLayer;
 using OfflineSiteMonitoringTool.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace OfflineSiteMonitoringTool.Repository.Tests
 {
@@ -14,12 +15,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         private IReportingEntities mockReportingEntity;
         private IConfigHelper configHelper;
         private IRepository repository;
+        private Mock<ILogger> log;
 
         [TestInitialize]
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
-            repository = new Repository(mockReportingEntity, configHelper);
+            log = new Mock<ILogger>();
+            repository = new Repository(mockReportingEntity, configHelper, log.Object);
         }
 
         [TestMethod]
@@ -60,7 +63,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         }
 
         [TestMethod]
-        public void GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit_SingleHealthboardHasExceededLimit_ReturnsCorrectHealthboard()
+        public void GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit_SingleHealthboardHasExceededLimit_UpdatesLog_ReturnsCorrectHealthboard()
         {
             string orgId1 = "1111";
             string orgId2 = "2222";
@@ -80,12 +83,15 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 3;
+            string expectedLogMessage = "WARNING: Number of offline sites per healthboard limit has been breached for: testHealthboard. " +
+                "Limit is currently set at: 3 sites per healthboard.";
             List<string> healthboardsThatHaveExceededLimit;
 
             healthboardsThatHaveExceededLimit = repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(offlineSitePerHealthboardLimit);
 
             Assert.AreEqual(1, healthboardsThatHaveExceededLimit.Count);
             Assert.AreEqual(healthboard, healthboardsThatHaveExceededLimit[0]);
+            log.Verify(x => x.Add(expectedLogMessage), Times.Once());
         }
 
         [TestMethod]

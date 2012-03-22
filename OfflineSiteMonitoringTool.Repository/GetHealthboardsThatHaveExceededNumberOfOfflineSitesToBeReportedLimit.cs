@@ -56,6 +56,15 @@ namespace OfflineSiteMonitoringTool.Repository
 
             List<string> healthboardsThatHaveExceededOfflineSiteLimit = CleanData(healthboardsThatHaveExceededOfflineSiteLimitRaw);
 
+            foreach (string healthboard in healthboardsThatHaveExceededOfflineSiteLimit)
+            {
+                _log.Add("WARNING: Number of offline sites per healthboard limit has been breached for: " +
+                    healthboard +
+                    ". Limit is currently set at: " +
+                    numberOfOfflineSitesToBeReportedPerHealthboardLimit +
+                    " sites per healthboard.");
+            }
+
             return healthboardsThatHaveExceededOfflineSiteLimit;
         }
     }
