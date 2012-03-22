@@ -21,6 +21,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         public void TestInitialize()
         {
             mockReportingEntity = new ReportingEntitiesMock();
+            configHelper = new ConfigHelper();
             log = new Mock<ILogger>();
             repository = new Repository(mockReportingEntity, configHelper, log.Object);
         }

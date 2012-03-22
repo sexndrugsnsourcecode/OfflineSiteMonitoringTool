@@ -18,7 +18,7 @@ namespace OfflineSiteMonitoringTool.Repository
             }
             catch
             {
-                // TODO: log error
+                _log.Add("ERROR: Unable to load 'replyTo' address from config file");
                 throw new Exception("Unable to load 'replyTo' address from config file");
             }
 

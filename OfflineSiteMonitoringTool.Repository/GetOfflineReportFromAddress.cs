@@ -18,7 +18,7 @@ namespace OfflineSiteMonitoringTool.Repository
             }
             catch
             {
-                // TODO: log error
+                _log.Add("ERROR: Unable to load 'from' address from config file");
                 throw new Exception("Unable to load 'from' address from config file");
             }
 

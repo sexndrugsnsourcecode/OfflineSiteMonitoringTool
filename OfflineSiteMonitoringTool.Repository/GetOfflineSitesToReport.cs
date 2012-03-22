@@ -51,7 +51,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (orgName == null)
             {
-                // TODO: Log warning
+                _log.Add("WARNING: There is no name value recorded in tbEPS_Organisation for site: " + orgId);
             }
 
             return orgName;
@@ -65,7 +65,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (supRef == null)
             {
-                // TODO: log warning
+                _log.Add("WARNING: There is no supplierReference value recorded in tbEPS_Organisation for site: " + orgId);
             }
 
             return supRef;
@@ -81,7 +81,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (lastMsgDate == null)
             {
-                // TODO: log warning
+                _log.Add("WARNING: There is no latestAMS value recorded in tbRPT_OrgSupplier for site: " + orgId);
             }
 
             return lastMsgDate;

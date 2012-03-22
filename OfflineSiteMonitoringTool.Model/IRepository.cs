@@ -24,5 +24,6 @@ namespace OfflineSiteMonitoringTool.Model
         MailAddress GetOfflineReportReplyToAddress();
         List<MailAddress> GetOfflineReportRecipients(string healthboard, string supplier);
         void RecordOfflineNotificationHasBeenSentForSite(string offlineSite);
+        int GetNumberOfRetriesAfterDatabaseError();
     }
 }

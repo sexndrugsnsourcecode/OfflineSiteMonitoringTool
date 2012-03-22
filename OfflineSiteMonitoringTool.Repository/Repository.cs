@@ -14,14 +14,15 @@ namespace OfflineSiteMonitoringTool.Repository
         private IConfigHelper _configHelper;
         private ILogger _log;
         
-        // todo: Load following from config file
-        int numberOfRetriesAfterDatabaseError = 5;
+        int numberOfRetriesAfterDatabaseError;
 
         public Repository(IReportingEntities reportingEntity, IConfigHelper configHelper, ILogger log)
         {
             _reportingEntity = reportingEntity;
             _configHelper = configHelper;
             _log = log;
+
+            numberOfRetriesAfterDatabaseError = _configHelper.GetNumberOfRetriesAfterDatabaseError();
         }
 
         private List<string> CleanData(List<string> dataToClean)

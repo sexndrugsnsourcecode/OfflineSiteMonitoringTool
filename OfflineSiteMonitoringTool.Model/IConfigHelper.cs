@@ -8,7 +8,7 @@ namespace OfflineSiteMonitoringTool.Model
     public interface IConfigHelper
     {
         int GetNumberOfOfflineSitesToBeReportedPerHealthboardLimit();
-        //Int16 GetNumberOfRetriesAfterDatabaseError();
+        int GetNumberOfRetriesAfterDatabaseError();
         string GetFromAddress();
         string GetReplyToAddress();
     }
