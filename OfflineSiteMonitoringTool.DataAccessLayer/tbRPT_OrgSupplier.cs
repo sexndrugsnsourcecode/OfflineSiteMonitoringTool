@@ -150,6 +150,12 @@ namespace OfflineSiteMonitoringTool.DataAccessLayer
             get;
             set;
         }
+    
+        public virtual Nullable<bool> excludeFromOfflineNotifications
+        {
+            get;
+            set;
+        }
 
         #endregion
     }

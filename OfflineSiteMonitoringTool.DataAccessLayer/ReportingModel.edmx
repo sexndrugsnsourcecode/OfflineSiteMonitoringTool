@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ReportingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="ReportingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ReportingModelStoreContainer">
           <EntitySet Name="tbEPS_Msg" EntityType="ReportingModel.Store.tbEPS_Msg" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tbEPS_Organisation" EntityType="ReportingModel.Store.tbEPS_Organisation" store:Type="Tables" store:Schema="dbo" store:Name="tbEPS_Organisation">
@@ -267,6 +267,7 @@
           <Property Name="latestAMS" Type="datetime" />
           <Property Name="latestCMS" Type="datetime" />
           <Property Name="latestMAS" Type="datetime" />
+          <Property Name="excludeFromOfflineNotifications" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'Reporting.dbo.tbRPT_SupplierContacts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -281,8 +282,7 @@
           <Property Name="Supplier" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Contact" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ReportingModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -486,6 +486,7 @@
           <Property Name="latestAMS" Type="DateTime" />
           <Property Name="latestCMS" Type="DateTime" />
           <Property Name="latestMAS" Type="DateTime" />
+          <Property Type="Boolean" Name="excludeFromOfflineNotifications" />
         </EntityType>
         <EntityType Name="tbRPT_SupplierContacts">
           <Key>
@@ -633,7 +634,8 @@
             <ScalarProperty Name="supplier" ColumnName="supplier" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="tbRPT_OrgSupplier"><EntityTypeMapping TypeName="ReportingModel.tbRPT_OrgSupplier"><MappingFragment StoreEntitySet="tbRPT_OrgSupplier">
-            <ScalarProperty Name="org" ColumnName="org" />
+            <ScalarProperty Name="excludeFromOfflineNotifications" ColumnName="excludeFromOfflineNotifications" />
+                <ScalarProperty Name="org" ColumnName="org" />
             <ScalarProperty Name="epoc" ColumnName="epoc" />
             <ScalarProperty Name="supplier" ColumnName="supplier" />
             <ScalarProperty Name="product" ColumnName="product" />
