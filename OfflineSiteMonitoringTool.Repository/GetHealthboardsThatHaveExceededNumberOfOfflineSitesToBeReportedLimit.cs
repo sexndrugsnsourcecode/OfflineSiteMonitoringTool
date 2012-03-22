@@ -22,7 +22,9 @@ namespace OfflineSiteMonitoringTool.Repository
             // Setting number of ofline sites per healthboard limit to zero is equivalent of telling app to ignore limit
             if (numberOfOfflineSitesToBeReportedPerHealthboardLimit == 0)
             {
-                // TODO: Update log
+                _log.Add("WARNING: The number of offline sites per healthboard limit is currently set to zero." +
+                " This means that no limit will be placed on the number of offline sites that can be reported for a healthboard");
+
                 return new List<string>();
             }
             

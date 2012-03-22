@@ -31,7 +31,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             string orgId = "11111";
             string healthboard = "testHealthboard";
             string supplier = "testSupplier";
-            //string expectedLogMessage = "Offline organisation recorded: " + org;
+            string expectedLogMessage = "INFO: New offline site found: " + orgId;
 
             // Add details to tbEPS_Organisation
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, healthboard, supplier));
@@ -45,7 +45,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             Assert.AreEqual(healthboard, offlineOrg.Healthboard);
             Assert.AreEqual(supplier, offlineOrg.Supplier);
             Assert.AreEqual(DateTime.Now.Date, offlineOrg.AuditCreatedOn.Date);
-            //log.Verify(x => x.Add(expectedLogMessage));
+            log.Verify(x => x.Add(expectedLogMessage));
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             string siteAlreadyRecordedAsOfflineOrgId = "11111";
             string healthboard = "testHealthboard";
             string supplier = "testSupplier";
-            //string expectedLogMessage = "Offline organisation recorded: " + org;
+            string expectedLogMessage = "ERROR: Site is already recorded as offline: " + siteAlreadyRecordedAsOfflineOrgId;
 
             // Add details to tbEPS_Organisation
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(siteAlreadyRecordedAsOfflineOrgId, healthboard, supplier));
@@ -68,8 +68,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
                                     select x).Count();
 
             Assert.AreEqual(1, offlineSiteCount);
-            // TODO: Verify log message
-            //log.Verify(x => x.Add(expectedLogMessage));
+            log.Verify(x => x.Add(expectedLogMessage));
         }
 
         [TestMethod]
@@ -77,13 +76,15 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         {
             string offlineSiteOrgId = "1111";
 
+            string expectedLogMessage = "ERROR: Cannot record offline site as site " + offlineSiteOrgId + " cannot be found in tbEPS_Organisation.";
+
             repository.RecordNewOfflineSite(offlineSiteOrgId);
 
             var offlineSiteCount = (from x in mockReportingEntity.tbRPT_OfflineSites
                                     select x).Count();
 
             Assert.AreEqual(0, offlineSiteCount);
-            // TODO: Check error is logged
+            log.Verify(x => x.Add(expectedLogMessage));
         }
     }
 }

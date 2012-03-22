@@ -135,7 +135,7 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         }
 
         [TestMethod]
-        public void GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit_OfflineSitesExist_OfflineSiteLimitSetToZero_ReturnsEmptyList()
+        public void GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit_OfflineSitesExist_OfflineSiteLimitSetToZero_UpdatesLog_ReturnsEmptyList()
         {
             string orgId1 = "1111";
             string orgId2 = "2222";
@@ -155,11 +155,14 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbRPT_OfflineSites.AddObject(AddDataTo_tbRPT_OfflineSites.AddRow(orgId5, auditCreatedOn, supplier, healthboard, dateOfflineNotificationSent));
 
             int offlineSitePerHealthboardLimit = 0;
+            string expectedLogMessage = "WARNING: The number of offline sites per healthboard limit is currently set to zero." +
+                " This means that no limit will be placed on the number of offline sites that can be reported for a healthboard";
             List<string> healthboardsThatHaveExceededLimit;
 
             healthboardsThatHaveExceededLimit = repository.GetHealthboardsThatHaveExceededNumberOfOfflineSitesToBeReportedLimit(offlineSitePerHealthboardLimit);
 
             Assert.AreEqual(0, healthboardsThatHaveExceededLimit.Count);
+            log.Verify(x => x.Add(expectedLogMessage));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (siteInOfflineSitesTable != null)
             {
-                // TODO: log error
+                _log.Add("ERROR: Site is already recorded as offline: " + offlineSite);
                 return;
             }
 
@@ -31,16 +31,14 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (site == null)
             {
-                // TODO: Log error - unable to find details of site in Org table
+                _log.Add("ERROR: Cannot record offline site as site " + offlineSite + " cannot be found in tbEPS_Organisation.");
                 return;
             }
-
-            // _log.Add("Recording offline org: " + org);
             
             _reportingEntity.tbRPT_OfflineSites.AddObject(site);
             _reportingEntity.SaveChanges();
 
-            //_log.Add("Offline organisation recorded: " + offlineOrg.Org);
+            _log.Add("INFO: New offline site found: " + site.Org);
             return;
         }
 
