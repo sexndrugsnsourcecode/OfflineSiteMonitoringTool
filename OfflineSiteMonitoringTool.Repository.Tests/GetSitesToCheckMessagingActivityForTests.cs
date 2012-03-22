@@ -71,6 +71,24 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
         }
 
         [TestMethod]
+        public void GetSitesToCheckMessagingActivityFor_IgnoresSitesWithExcludeFromOfflineNotificationsFlagSet_ReturnsEmptyList()
+        {
+            string orgId = "1111";
+            DateTime? orgEndDate = null;
+            bool archived = false;
+            bool dispensing = false;
+            bool excludeFromOfflineNotifications = true;
+
+            mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId, orgEndDate, archived, dispensing));
+            mockReportingEntity.tbRPT_OrgSupplier.AddObject(AddDataTo_tbRPT_OrgSupplier.AddRow(orgId, excludeFromOfflineNotifications));
+
+            List<string> result;
+            result = repository.GetSitesToCheckMessagingActivityFor();
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
         public void GetSitesToCheckMessagingActivityFor_EligableSitesExistInTable_ReturnsSitesInCorrectOrder()
         {
             string orgId1 = "1111";
@@ -80,6 +98,10 @@ namespace OfflineSiteMonitoringTool.Repository.Tests
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId1));
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId2));
             mockReportingEntity.tbEPS_Organisation.AddObject(AddDataTo_tbEPSOrganisation.AddRow(orgId3));
+
+            mockReportingEntity.tbRPT_OrgSupplier.AddObject(AddDataTo_tbRPT_OrgSupplier.AddRow(orgId1));
+            mockReportingEntity.tbRPT_OrgSupplier.AddObject(AddDataTo_tbRPT_OrgSupplier.AddRow(orgId2));
+            mockReportingEntity.tbRPT_OrgSupplier.AddObject(AddDataTo_tbRPT_OrgSupplier.AddRow(orgId3));
 
             List<string> results;
             results = repository.GetSitesToCheckMessagingActivityFor();

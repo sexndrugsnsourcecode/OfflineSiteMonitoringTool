@@ -19,10 +19,13 @@ namespace OfflineSiteMonitoringTool.Repository
         private List<string> getSitesToCheckMessagingActivityFor()
         {
             var sitesToCheckMessagingActivityForRaw = (from x in _reportingEntity.tbEPS_Organisation
-                                                    where x.endDate == null
-                                                    && x.archived == false
-                                                    && x.dispensing == false
-                                                    select x.id).ToList<string>();
+                                                       join y in _reportingEntity.tbRPT_OrgSupplier 
+                                                       on x.id equals y.org
+                                                       where x.endDate == null
+                                                       && x.archived == false
+                                                       && x.dispensing == false
+                                                       && y.excludeFromOfflineNotifications == false
+                                                       select x.id).ToList<string>();
 
             List<string> sitesToCheckMessagingActivityFor = CleanData(sitesToCheckMessagingActivityForRaw);
 
