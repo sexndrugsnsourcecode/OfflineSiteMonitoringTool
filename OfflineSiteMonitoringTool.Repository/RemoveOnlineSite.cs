@@ -20,8 +20,7 @@ namespace OfflineSiteMonitoringTool.Repository
 
             if (siteRecordedAsOnline == null)
             {
-                //_log.Add("Tool tried to remove an organisation from tbRPT_OfflineSites that " +
-                //    "doesn't exist. Organisation: " + onlineOrg);
+                _log.Add("ERROR: Tool attempted to mark a site: " + onlineSite + " as online but this site doesn't exist in tbRPT_OfflineSites");
 
                 return;
             }
@@ -29,7 +28,7 @@ namespace OfflineSiteMonitoringTool.Repository
             _reportingEntity.DeleteObject(siteRecordedAsOnline);
             _reportingEntity.SaveChanges();
 
-            //_log.Add("Organisation has come back online: " + onlineOrg);
+            _log.Add("INFO: Site has come back online: " + onlineSite);
             return;
         }
     }
